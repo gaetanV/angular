@@ -7,19 +7,39 @@
     <title data-ng-bind="title"></title>
     <link href="./content/styles.css" rel="stylesheet" />
     <script src= "./content/angular.js"></script>
+    <script src= "./content/angular-route.js"></script>
+    
      <script src="./app/app.module.js"></script>
-     <!-- ngdrag directive -->
-     <script src="./app/directive/ngdrag.directive.js"></script>
-      <link href="./app/directive/ngdrag.directive.css" rel="stylesheet" />
+     <script src="./app/app.route.js"></script>
+     
+            <!-- ngdrag directive -->
+            <script src="./directive/ngdrag.directive.js"></script>
+             <link href="./directive/ngdrag.directive.css" rel="stylesheet" />
+            <!-- children-repeat directive -->
+           <script src="./directive/childrenRepeat.directive.js"></script>
+
 </head>
 <body>
-    <div data-ng-include="'app/ngdrag/ngdrag.html'"></div>
-    <div data-ng-include="'app/ngdrag/ngclone.html'"></div>
+    
+            <ul class="nav">
+                     <li><a href="#ngdrag"> ngdrag </a></li>
+                     <li><a href="#ngdragclone"> ngdragclone </a></li>
+                     <li><a href="#childrenrepeat"> childrenrepeat </a></li>
+                 </ul>
+            
+             <div ng-view></div>       
+
+
      
     <!-- Exemple directive DRAG -->
     <script src="./app/item/item.class.js"></script>
     <script src="./app/ngdrag/ngdrag.module.js"></script>
     <script src="./app/ngdrag/ngdrag.js"></script>
   
+     <!-- Exemple children repeat  -->
+    <script src="./app/childrenrepeat/childrenrepeat.module.js"></script>
+    <script src="./app/childrenrepeat/childrenrepeat.js"></script>
+    
+    
 </body>
 </html>

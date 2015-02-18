@@ -8,6 +8,7 @@ var shoe, shirt, cap;
         this.price= "undefined";
     };
 
+
     shoe = function shoe() {
         item.call(this);
         this.name = "shoe";

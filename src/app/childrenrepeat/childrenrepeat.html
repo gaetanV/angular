@@ -1,0 +1,21 @@
+<section>
+    
+      <h1>Children-repeat (compile)</h1>
+        <div class="controller" ng-app="app" ng-controller="ChildrenRepeat">
+          
+                  <ul>
+                       <li children-repeat="item in sample track by children">
+                                    {{item.title}}  [ index: {{$self.id}} , level:{{$self.level}}  ] 
+                                    <span ng-click="pushID($self.parent)"> push</span> 
+                                    <div ng-click="pushTop(item)">
+                                               [ AddChild level: {{$self.level+1}} ] 
+                                    </div>
+                        </li>
+                  </ul>
+
+              <div ng-click="push()"> PUSH</div>
+              <div ng-click="pushchild()"> PUSHChild</div>
+                  {{sample}}
+       </div>
+    
+</section>

@@ -1,6 +1,11 @@
 # directive_angular
- V 0.0.1
+ V 0.0.2
 ##specification 
-###ngdrag.directive
-####DRAG function AND DROP function
-####DRAG AND DROP as clone
+###ngdrag
+####ng-drag-action | ng-drop-action
+####ng-drop 
+groupe as id
+####ng-drag 
+groupe as id
+
+###child-repeat

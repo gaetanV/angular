@@ -3,7 +3,8 @@
     angular
             .module('app')
             .directive('ngDrag', NgDrag);
-
+    
+    NgDrag.$inject = ["$compile", "$parse"];
      
    function NgDrag($compile , $parse) {
         return {
@@ -14,8 +15,8 @@
                 $scope.dragjs = "";
                 $scope.clone = "";
                 function cancel() {
-                }
-                ;
+                };
+                
                 function dropTo(target) {
                     if (target.getAttribute("ng-drop-action")) {
 

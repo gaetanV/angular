@@ -6,7 +6,9 @@
 
     <div class="controller" ng-controller="NgDrag" >
            <h2>  CONTROLLER  ( NgDrag )</h2>
-           
+                First Item Name :
+        <br/>
+        <input ng-model="pItem1[0].name" />
         <article  ng-drag >{{pItem1[0].name}} </article>      
         <div  class="reception"  ng-drop >Clone in controller</div>
     </div>

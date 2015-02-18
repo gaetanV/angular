@@ -2,7 +2,13 @@
     'use strict';
 
     angular.module('app', [
-        'app.ngDrag'
+        //System
+        'ngRoute',
+        //Directive
+        'app.ngDrag' , 'app.childrenRepeat'
+        
+        
     ]);
+
 
 })();
