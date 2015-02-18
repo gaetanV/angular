@@ -1,0 +1,43 @@
+<section>
+    <h1>Drag and Drop </h1>
+
+    <h2> CONTROLLER 1 ( NgDrag ) </h2>
+
+    <div class="controller" ng-controller="NgDrag" >
+        <h3>List Item 1</h3>
+        First Item Name :
+        <br/>
+        <input ng-model="pItem1[0].name" />
+        <br/>
+        {{pItem1}}
+        <ul class="reception" ng-drop="list"  ng-drop-action="add(pItem1,ngCall.item)">
+            <li ng-repeat="item in pItem1">
+                <div  ng-drag="list2"  ng-drag-action="remove(pItem1,$index)" > {{item.name}}  </div>
+            </li>
+        </ul>
+
+        <h3>List Item 2</h3>
+        First Item Name :
+        <input ng-model="pItem2[0].name" />
+        {{pItem2}}
+        <ul class="reception" ng-drop="list2"  ng-drop-action="add(pItem2,ngCall.item)"  >
+            <li ng-repeat="item in pItem2"   >
+                <div ng-drag="list" ng-drag-action="remove(pItem2,$index)"> {{item.name}}</div>
+            </li>
+        </ul>
+    </div>
+
+    <div class="controller" ng-controller="NgDrag" >
+        <h2>CONTROLLER 2  ( NgDrag )</h2>
+        <h3>List Item 2</h3>
+        First Item Name :
+        <input ng-model="pItem2[0].name" />
+        <br/>
+        {{pItem2}}
+        <ul class="reception" ng-drop="list2"  ng-drop-action="add(pItem2,ngCall.item)"  >
+            <li ng-repeat="item in pItem2"   >
+                <div ng-drag="list" ng-drag-action="remove(pItem2,$index)"> {{item.name}}</div>
+            </li>
+        </ul>
+    </div>
+</section>

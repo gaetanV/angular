@@ -1,0 +1,25 @@
+﻿<!DOCTYPE html>
+<html data-ng-app="app" ng-strict-di>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+    <title data-ng-bind="title"></title>
+    <link href="./content/styles.css" rel="stylesheet" />
+    <script src= "./content/angular.js"></script>
+     <script src="./app/app.module.js"></script>
+     <!-- ngdrag directive -->
+     <script src="./app/directive/ngdrag.directive.js"></script>
+      <link href="./app/directive/ngdrag.directive.css" rel="stylesheet" />
+</head>
+<body>
+    <div data-ng-include="'app/ngdrag/ngdrag.html'"></div>
+    <div data-ng-include="'app/ngdrag/ngclone.html'"></div>
+     
+    <!-- Exemple directive DRAG -->
+    <script src="./app/item/item.class.js"></script>
+    <script src="./app/ngdrag/ngdrag.module.js"></script>
+    <script src="./app/ngdrag/ngdrag.js"></script>
+  
+</body>
+</html>

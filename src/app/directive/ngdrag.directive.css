@@ -1,0 +1,6 @@
+.ng-drop{
+    border:#000 dashed 2px;
+}
+.ng-drop-active{
+    background:#ddd;
+}
