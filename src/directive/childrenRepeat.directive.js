@@ -44,7 +44,7 @@
                                parent:collection
                            };
                           linker(childScope, function(clone){
-                        clone.removeAttr('children-repeat');   /// A FAIRE PARENT APPEND
+                          clone.removeAttr('children-repeat');   /// A FAIRE PARENT APPEND
 
                            parent.append(clone); 
                            clone.on('$destroy', function() {
@@ -53,11 +53,8 @@
 
 
                            if(collection[i].children){ 
-
                                buildList(collection[i].children,clone,nv);
                            }
-
-
                         });
                       };
                   };

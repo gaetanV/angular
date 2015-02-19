@@ -3,9 +3,8 @@
 ##specification 
 ###ngdrag
 ####ng-drag-action | ng-drop-action
-####ng-drop 
+####ng-drop | ng-drag 
 groupe as id
-####ng-drag 
-groupe as id
+
 
 ###child-repeat

@@ -3,31 +3,43 @@
     angular
             .module('app')
             .directive('ngDrag', NgDrag);
-    
+
     NgDrag.$inject = ["$compile", "$parse"];
-     
-   function NgDrag($compile , $parse) {
+
+    function NgDrag($compile, $parse) {
         return {
             restrict: 'A',
             transclude: true,
             template: '<span ng-transclude></span>',
-            link: function($scope, element, attrs, controller, $transclude) {
-                $scope.dragjs = "";
-                $scope.clone = "";
-                function cancel() {
+            link:link
+        };           
+     
+      function link($scope, element, attrs,module,$transclude) {
+     
+                element.on('mousedown', mousedown);
+                function mousedown(e) {
+                    new drag(e, attrs.ngDrag, dropTo);
+                    //attrs.ngDrag AS ID GROUP//
+                    return false;
+                };
+                /**
+                 * call back
+                 **/
+                var dropTo = function(target) {
+                    var actionDrop = target.getAttribute("ng-drop-action");
+                    var actionDrag = attrs.ngDragAction;
+                    
+                    if (actionDrop) { //IF ACTION DROP
+                        parseAction(actionDrop,target,"drop");
+                    } else {  //IF NOT ACTION DROP CLONE
+                         clone(target);
+                    }
+                    if (actionDrag) { //IF ACTION DRAG
+                        parseAction(actionDrag,target,"drag");
+                    };
                 };
                 
-                function dropTo(target) {
-                    if (target.getAttribute("ng-drop-action")) {
-
-                        var fn = $parse(target.getAttribute("ng-drop-action"));
-                        var callback = function() {
-                            var scopeDrop = angular.element(target).scope();
-                            scopeDrop.ngCall = $scope;
-                            fn(scopeDrop, {$event: target});
-                        };
-                        $scope.$apply(callback);
-                    } else {
+                function clone(target){
                         var cloneElement = angular.element(element[0].cloneNode(false));
                         var callback = $transclude(function(clone) {
                             cloneElement.append(clone);
@@ -35,128 +47,147 @@
                             angular.element(target).append(cloneElement);
                         });
                         $scope.$apply(callback);
-                    }
-                    if (attrs.ngDragAction) {
-                        var fn = $parse(attrs.ngDragAction);
+                };
+                
+                function parseAction(action,target,type){
+                   var fn = $parse(action);
                         var callback = function() {
-                            fn($scope, {$event: target});
-                        };
-
-                        $scope.$apply(callback);
-                    }
+                            var scopeDrop = angular.element(target).scope();
+                           switch(type){
+                               case "drop":
+                                   scopeDrop.ngCall = $scope;
+                                    fn(scopeDrop, {$event: target});
+                                   break;
+                               case "drag":
+                               default:
+                                    fn($scope, {$event: target});
+                                   break;
+                           }
+                        
+                     };
+                    $scope.$apply(callback);
                 };
 
-                element.on('mousedown', mousedown);
+            };
+    } ;
 
 
-                function mousedown(e) {
+    var drag = function(e, idGroup, callback) {
+        var vm = this;
+        var dom = e.currentTarget;
+        
+        vm._xClick = -(dom.offsetLeft - e.pageX);
+        vm._yClick = -(dom.offsetTop - e.pageY);
+        vm.haveMove = false;
+        
+        vm.ngdropList = vm.initDropList(idGroup);
+        vm.dropTo = callback;
 
+        vm.cloneDom = vm.clone(dom); //Dom move
 
-                    new drag(e, attrs.ngDrag);
+        vm.move(e);
+        vm.overDrop; //Dom target
 
-                    return false;
-                }
-                ;
-
-                function drag(e, ID) {
-                    var eDom = e.currentTarget;
-                    var clone = eDom.cloneNode(true);
-                    var _x = -(eDom.offsetLeft - e.pageX);
-                    var _y = -(eDom.offsetTop - e.pageY);
-
-                    var element = document.createElement("div");
-                    element.appendChild(clone);
-                    element.style.width = eDom.offsetWidth + "px";
-                    element.style.position = "fixed";
-                    element.style.opacity = "1";
-                    element.style.cursor = "move";
-                    var drop = initDrop();
-                    var haveMove = false;
-                    var overDrop;
-                    move(e);
-
-                    document.body.appendChild(element);
-
-
-                    function initDrop() {
-                        var drop = document.querySelectorAll("[ng-drop='" + ID + "']");
-                        for (var i = 0; i < drop.length; i++) {
-                             angular.element(drop[i]).addClass("ng-drop");
-                        }
-                        return drop;
-                    }
-
-                    function endDrop() {
-                        for (var i = 0; i < drop.length; i++) {
-                           angular.element( drop[i]).removeClass("ng-drop");
-                            angular.element(drop[i]).removeClass("ng-drop-active");
-                        }
-                    }
-
-                    var checkTimer = setInterval(function check() {
-                        haveMove = haveMove ? false : true;
-                    }, 50);
-
-                    function checkPosition(e) {
-                        var x = e.clientX + window.pageXOffset;
-                        var y = e.clientY + window.pageYOffset;
-                        if (overDrop) {
-                            angular.element(overDrop).removeClass("ng-drop-active");
-                            overDrop = false;
-                        }
-                        for (var i = 0; i < drop.length; i++) {
-
-                            if (x > drop[i].offsetLeft && x < (drop[i].offsetWidth + drop[i].offsetLeft) && y > drop[i].offsetTop && y < (drop[i].offsetTop + drop[i].offsetHeight)) {
-                                if (overDrop !== drop[i]) {
-
-                                     angular.element(drop[i]).addClass("ng-drop-active");
-                                    overDrop = drop[i];
-                                    return drop[i];
-                                } else {
-                                    return false;
-                                }
-                            }
-                        }
-
-                        return false;
-                    }
-
-                    function end(e) {
-                        if (overDrop) {
-                            dropTo(overDrop);
-                        } else {
-                            cancel();
-                        }
-                        document.removeEventListener('mousedown', block);
-                        document.removeEventListener('mouseup', end);
-                        document.removeEventListener('mousemove', move);
-                        document.body.removeChild(element);
-                        clearInterval(checkTimer)
-                        endDrop();
-                    }
-
-                    function move(e) {
-                        if (!haveMove) {
-                            haveMove = true;
-                            checkPosition(e);
-                        }
-                        element.style.left = (e.clientX - _x) + "px";
-                        element.style.top = (e.clientY - _y) + "px";
-                        return false;
-                    }
-                    ;
-                    function block(e) {
-                        e.stopPropagation();
-                        e.preventDefault();
-                    }
-                    ;
-                    document.addEventListener('mousedown', block);
-                    document.addEventListener('mousemove', move);
-                    document.addEventListener('mouseup', end);
-                }
-                ;
+        vm.checkTimer = setInterval(function check() {
+            if (vm.haveMove)
+                vm.haveMove = false;
+        }, 50); // restrict calls to checkPosition
+        //
+        ///EVENTS///
+        vm.handleEvent = function(e) {
+            switch (e.type) {
+                case 'mousedown':
+                    e.stopPropagation();
+                    e.preventDefault();
+                    break;
+                case 'mousemove':
+                    this.move(e);
+                    break;
+                case 'mouseup':
+                    this.end(e);
+                    break;
             }
         };
+        document.addEventListener('mousedown', vm);
+        document.addEventListener('mousemove', vm);
+        document.addEventListener('mouseup', vm);
     };
 
+
+    drag.prototype.end = function(e) {
+        document.body.removeChild(this.cloneDom);
+        this.removeDropList();
+        document.removeEventListener('mousedown', this);
+        document.removeEventListener('mouseup', this);
+        document.removeEventListener('mousemove', this);
+        clearInterval(this.checkTimer)
+        if (this.overDrop) {
+            this.dropTo(this.overDrop);
+        };
+  };
+
+
+    drag.prototype.clone = function(dom) {
+        var element = document.createElement("div");
+        element.appendChild(dom.cloneNode(true));
+        element.style.width = dom.offsetWidth + "px";
+        element.style.position = "fixed";
+        element.style.opacity = "1";
+        element.style.cursor = "move";
+        document.body.appendChild(element);
+        return element;
+    };
+
+
+    drag.prototype.checkPosition = function(e) {
+        var drop = this.ngdropList;
+        var x = e.clientX + window.pageXOffset;
+        var y = e.clientY + window.pageYOffset;
+        if (this.overDrop) {
+            angular.element(this.overDrop).removeClass("ng-drop-active");
+            this.overDrop = false;
+        }
+        for (var i = 0; i < drop.length; i++) {
+
+            if (x > drop[i].offsetLeft && x < (drop[i].offsetWidth + drop[i].offsetLeft) && y > drop[i].offsetTop && y < (drop[i].offsetTop + drop[i].offsetHeight)) {
+                if (this.overDrop !== drop[i]) {
+                    angular.element(drop[i]).addClass("ng-drop-active");
+                    this.overDrop = drop[i];
+
+                    return drop[i];
+                } else {
+                    return false;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    drag.prototype.move = function(e) {
+        if (!this.haveMove) {
+            this.haveMove = true;
+            this.checkPosition(e);
+        }
+        this.cloneDom.style.left = (e.clientX - this._xClick) + "px";
+        this.cloneDom.style.top = (e.clientY - this._yClick) + "px";
+    };
+
+
+    drag.prototype.initDropList = function(idGroup) {
+        var ngdropList = document.querySelectorAll("[ng-drop='" + idGroup + "']");
+        for (var i = 0; i < ngdropList.length; i++) {
+            angular.element(ngdropList[i]).addClass("ng-drop");
+        }
+        ;
+        return  ngdropList;
+    };
+
+    drag.prototype.removeDropList = function() {
+        for (var i = 0; i < this.ngdropList.length; i++) {
+            angular.element(this.ngdropList[i]).removeClass("ng-drop");
+            angular.element(this.ngdropList[i]).removeClass("ng-drop-active");
+        };
+        this.ngdropList = [];
+    }
 })();
