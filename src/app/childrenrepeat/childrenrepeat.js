@@ -28,17 +28,45 @@
                 title: "Sample Title 2",
                 children: [{title: "Child Title 1"}, {title: "Child Title 2"}]}
         ];
+        $scope.push = function() {
 
+            $scope.sample.push(
+                    {
+                        title: "Sample Title 2",
+                        children: [{title: "Child Title 1"}, {title: "Child Title 2"}]
+                    }
+            );
 
-        $scope.pushAfter = function($self) {
-            if ($self.children) {
-                $scope.pushIn($self.children);
-            } else
-                $self.children = [{title: "pushAfter Title 1"}];
+        }
+
+        $scope.pushchild = function() {
+
+            $scope.sample[1].children.push(
+                    {
+                        title: "Sample Title 2",
+                        children: [{title: "Child Title 1"}, {title: "Child Title 2"}]
+                    }
+            );
+
         };
 
-        $scope.pushIn = function($parent) {   
-            $parent.push({ title: "pushIn Title 2"});
+        $scope.pushTop = function($self) {
+
+            if ($self.children) {
+                $self.children.push({
+                    title: "test Title 2",
+                });
+            } else
+                $self.children = [{title: "Child Title 1"}];
+        };
+
+        $scope.pushID = function($parent) {
+
+            $parent.push({
+                title: "test Title 2",
+            });
+
+
         }
 
     }
