@@ -2,7 +2,7 @@ var shoe, shirt, cap;
 (function() {
     'use strict';
 
-    var item = function people() {
+    var item = function item() {
         this.type = "item";
         this.name = "undefined";
         this.price= "undefined";
