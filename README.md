@@ -1,5 +1,5 @@
 # directive_angular
- V 0.0.2
+ V 0.0.3
 ##specification 
 ###ngdrag
 ####ng-drag-action | ng-drop-action
@@ -8,3 +8,5 @@ groupe as id
 
 
 ###child-repeat
+
+###quick-edit

@@ -4,8 +4,8 @@
     angular.module('app', [
         //System
         'ngRoute',
-        //Directive
-        'app.ngDrag' , 'app.childrenRepeat'
+        //Module
+        'app.ngDrag' , 'app.childrenRepeat','app.quickEdit'
         
         
     ]);

@@ -11,8 +11,6 @@
             transclude: 'element',
             compile: compile  ,
          };  
-                    
-     
          function compile($element, $attr,transclude) {
                     //ATTRIBUTS
                     var myLoop = $attr.childrenRepeat;
@@ -21,13 +19,14 @@
                     var collectionName = match[2];
                     var scopeChildName = match[4];
                     
-                    //NODE PARENT
-                    var nodeParent = $element.parent();
-                    var nodeParentName=nodeParent[0].nodeName;
-                    
+   
                     return { pre:link};
 
-                    function link($scope){        
+                    function link($scope,element){       
+                        //NODE PARENT
+                        var nodeParent = element.parent();
+                        var nodeParentName=nodeParent[0].nodeName;
+                    
                         //ON SCOPE "collectionString" CHANGE
                         $scope.$watch(collectionName, function(collection) {
                             nodeParent.children().remove();

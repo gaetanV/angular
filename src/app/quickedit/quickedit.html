@@ -1,0 +1,29 @@
+<section>
+ 
+    <h1>Quick edit </h1>
+    
+    <div class="controller" ng-controller="QuickEdit" >
+        {{pItem1}}
+         <ul>
+            <li ng-repeat="item in pItem1"   >
+                <div quick-edit="read">
+                        <div id="edit" quick-action="clone">
+                           {{item.name}}
+                           <form  name="editTerm"  ng-submit="submit(form)" >
+                                <input type="text"  required="required"  ng-model="form.name">
+                                <input type="submit" >
+                            </form>
+                           <p ng-click="switch('read')">O</p>
+                        </div> 
+                         <div id="read">
+                               {{item.name}}
+                             <p ng-click="switch('edit')">O</p>
+                         </div>
+                </div>
+            </li>
+        </ul>
+        
+    </div>
+
+    
+</section>

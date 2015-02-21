@@ -17,7 +17,10 @@
                templateUrl : './app/ngdrag/ngdrag.html',
             }).when('/ngdragclone', {
                templateUrl : './app/ngdrag/ngclone.html',
-            }) ;
+            })
+            .when('/quickedit', {
+               templateUrl : './app/quickedit/quickedit.html',
+            });
     };
 
 
