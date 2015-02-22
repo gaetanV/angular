@@ -11,14 +11,16 @@
         
         
         $scope.clone=function(tscope){
-
+      
              tscope.form=angular.copy(tscope.item);
-             
              tscope.submit=function(){
-                     tscope.item=angular.copy(tscope.form);
-                     tscope.model="read";
+                    if(tscope.editItem.$valid===true){
+
+                        $scope.pItem1[tscope.$index]=angular.copy(tscope.form);
+                        $scope.quickModel="read";
+                    };
+                    
              };
-            
         };
         
       $scope.pItem1 = [new cap(), new shirt(),new shirt()];

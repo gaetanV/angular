@@ -14,29 +14,33 @@
         };
 
         function compile($element, $attr, transclude) {
-
+            
             return {pre: link};
             function link($scope, element) {
-                $scope.model = $attr.quickEdit;
-                $scope.switch = function (id) {
-                    $scope.model = id;
-
-                }
-                $scope.$watch("model", function (model) {
+                $scope.quickModel = $attr.quickEdit;
+                $scope.switchModel = function (id) {
+                    $scope.quickModel = id;
+                };
+                $scope.$watch("quickModel", function (model) {
+         
                     transclude($scope, function (clone) {
+                        
+                        
                         for (var i = 0; i < clone.length; i++) {
-                            if (clone[i].id === model) {
-
+                            if(clone[i].toString()=="[object HTMLDivElement]")
+                               var attModel = clone[i].getAttribute("quick-model");
+                     
+                            if (attModel=== model) {
                                 element.children().remove();
-                                var att = clone[i].getAttribute("quick-action");
-                                if (att) {
-                                    $scope[att]($scope);
+                                var attAction = clone[i].getAttribute("quick-action");
+                                if (attAction) {
+                                    $scope[attAction]($scope);
                                 }
                                 ;
 
                                 element.append(clone[i]);
                                 break;
-                            }
+                             }  
                         }
 
                     });
