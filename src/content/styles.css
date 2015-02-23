@@ -100,3 +100,9 @@ li{
     padding: 20px;
 }
 
+.list-child ul{
+        padding: 20px;
+}
+.list-child li{
+    border-bottom: 0;
+};
