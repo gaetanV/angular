@@ -20,6 +20,9 @@
             })
             .when('/quickedit', {
                templateUrl : './app/quickedit/quickedit.html',
+            })
+            .when('/matchfield', {
+               templateUrl : './app/matchfield/matchfield.html',
             });
     };
 
