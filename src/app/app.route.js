@@ -23,7 +23,10 @@
             })
             .when('/matchfield', {
                templateUrl : './app/matchfield/matchfield.html',
-            });
+            }) .when('/multipattern', {
+               templateUrl : './app/matchfield/multipattern.html',
+            })
+            ;
     };
 
 
