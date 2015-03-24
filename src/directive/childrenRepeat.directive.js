@@ -8,7 +8,7 @@
 
     function ChildrenRepeat() {
         return {
-            transclude: 'element',
+            transclude: true,
             compile: compile  ,
          };  
          function compile($element, $attr,transclude) {
@@ -24,20 +24,23 @@
 
                     function link($scope,element){       
                         //NODE PARENT
-                        var nodeParent = element.parent();
+                        var nodeParent = element;
                         var nodeParentName=nodeParent[0].nodeName;
                     
                         //ON SCOPE "collectionString" CHANGE
                         $scope.$watch(collectionName, function(collection) {
-                            nodeParent.children().remove();
-                            buildListNode(collection, nodeParent, 0);
-
+                           if(collection){
+                               nodeParent.children().remove();
+                               buildListNode(collection, nodeParent, 0);
+                             };
                             function buildListNode(collection, parent, nv) {
+                          
                                 // If is not First Level , Build a list container
                                 if (nv !== 0) {
                                     var container = angular.element(document.createElement(nodeParentName));
                                     container.addClass("lv" + nv);
-                                    parent.append(container);
+                        
+                                     angular.element(parent).append(container);
                                     parent = container;
                                 }
                                 nv++;
@@ -54,23 +57,49 @@
 
                                     //Build a item dom for each children ( transclude with new scope )
                                     transclude(childScope, function(clone) {
-                                        clone.removeAttr('children-repeat');  
-                                        parent.append(clone);
+                                           var haveChild= collection[i][scopeChildName]?true :false;
+                                           var model=0;
+                                           for (var j = 0; j < clone.length; j++) {
+                                              
+                                                if(clone[j] instanceof HTMLElement){
+                                                           if(model==0)  model=j; 
+                                                           if(!haveChild){
+                                                                 if(clone[j].getAttribute("lv")=="end"){
+                                                                     var custom=j;  
+                                                                     break; 
+                                                                    
+                                                                 }
+                                                           }
+                                                          if ( clone[j].getAttribute("lv")) {
+                                                                       if(clone[j].getAttribute("lv")==nv-1){
+                                                                             var custom=j;  
+                                                                             break;
+                                                                       }  
+                                                           };
+                                                }
+                                            }
 
+                                            var id=  custom? custom : model;
+                                        
+                                            parent.append(clone[id]);
+                                        
+                                     
+                                    
                                         //Clean scope on destroy (nodeParent.children().remove());
                                         clone.on('$destroy', function() {
                                             childScope.$destroy();
                                         });
 
                                         // If have children (scope.scopeChildName) loop on buildListNode
-                                        if (collection[i][scopeChildName]) {
-                                            buildListNode(collection[i].children, clone, nv);
+                                        if (haveChild) {
+                                                 buildListNode(collection[i][scopeChildName], clone[id], nv);
                                         }
                                     });
                                 }
                                 ;
                             }
                             ;
+                          
                         }, true);
                     };
                 }

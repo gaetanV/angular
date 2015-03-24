@@ -3,14 +3,21 @@
       <h1>Children-repeat (compile)</h1>
         <div class="controller" ng-app="app" ng-controller="ChildrenRepeat">
           
-                  <ul class="list-child">
-                       <li children-repeat="item in sample track by children">
+                  <ul class="list-child" children-repeat="item in sample track by children">
+                       <li >
                                     {{item.title}}  [ index: {{$item.id}} , level:{{$item.level}}  ] 
                                     <span ng-click="pushIn($item.parent)"> push</span> 
+                             
+                        </li>
+                        
+                         <li  lv="end" >
+                                    {{item.title}}  [ index: {{$item.id}} , level:{{$item.level}}  ] 
+                                    
                                     <div ng-click="pushAfter(item)">
                                                [ AddChild level: {{$item.level+1}} ] 
                                     </div>
                         </li>
+                        
                   </ul>
             <div class="scope">  {{sample}}</div>
                  
