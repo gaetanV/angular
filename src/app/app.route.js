@@ -25,7 +25,7 @@
                templateUrl : './app/matchfield/matchfield.html',
             }) .when('/multipattern', {
                templateUrl : './app/matchfield/multipattern.html',
-            }).when('/dropfile', {
+            }).when('/dropfiles', {
                templateUrl : './app/dropfiles/dropfiles.html',
             })
             ;
