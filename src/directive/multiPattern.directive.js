@@ -11,11 +11,12 @@
          };  
          function link(scope, elem, attrs, ctrl){
               if (!ctrl) return;
-              attrs=JSON.parse(attrs.multiPattern);
+              //V1 attrs=JSON.parse(attrs.multiPattern);
+              attrs = !(/[^,:{}\[\]0-9.\-+Eaeflnr-u \n\r\t]/.test(attrs.multiPattern.replace(/"(\\.|[^"\\])*"/g, ''))) && eval('(' + attrs.multiPattern + ')');
               for(var func in attrs){
                          var patternExp = attrs[func];
                          if (typeof (patternExp)=="string" && patternExp.length > 0) {
-                             var regex = new RegExp('^' + patternExp + '$');
+                             var regex = new RegExp( patternExp);
                            };
                            
                            if(!regex.test){
