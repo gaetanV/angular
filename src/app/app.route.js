@@ -27,6 +27,8 @@
                templateUrl : './app/matchfield/multipattern.html',
             }).when('/dropfiles', {
                templateUrl : './app/dropfiles/dropfiles.html',
+            }).when('/finder', {
+               templateUrl : './app/finder/finder.html',
             })
             ;
     };

@@ -5,7 +5,7 @@
         //System
         'ngRoute',
         //Module
-        'app.ngDrag' , 'app.childrenRepeat','app.quickEdit','app.field'
+        'app.ngDrag' , 'app.childrenRepeat','app.quickEdit','app.field' ,'app.finder'
         
         
     ]);
