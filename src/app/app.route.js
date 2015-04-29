@@ -29,6 +29,8 @@
                templateUrl : './app/dropfiles/dropfiles.html',
             }).when('/finder', {
                templateUrl : './app/finder/finder.html',
+            }).when('/datePicker', {
+               templateUrl : './app/date/datePicker.html',
             })
             ;
     };
