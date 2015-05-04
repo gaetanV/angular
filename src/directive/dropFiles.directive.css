@@ -6,6 +6,8 @@
             min-height: 100px;
              position: absolute;
              opacity:0;
+             display: block;
+             clear:both;
         }
         
         .drop-file {
@@ -15,7 +17,15 @@
              border:#000 dashed 1px;
             
         }
-   
+        .drop-files:after {
+            clear: both;
+            content: ".";
+            display: block;
+            font-size: 0;
+        }
+
+        
+        
         .drop-files li{
                height:100px;
                  width:100px;  
