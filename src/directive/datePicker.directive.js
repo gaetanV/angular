@@ -15,21 +15,21 @@
         function link($scope, $element, $attrs, $controller) {
             $element.on('mousedown', mousedown);
             function mousedown(e) {
-                var datepickerDom,month, ulDom, liDom;
+                var datepickerDom, month, ulDom, liDom;
                 var childScope;
                 var datepicker = new calendar("fr");
 
                 var init = function () {
                     datepickerDom = document.createElement("div");
-                    datepickerDom.className="datePicker";
+                    datepickerDom.className = "datePicker";
                     month = document.createElement("div");
-                    month.className="dp_labelMonth";
+                    month.className = "dp_labelMonth";
                     var node = document.createTextNode("{{year}} {{labelMonth}}");
                     month.appendChild(node);
                     datepickerDom.appendChild(month);
-                      
+
                     ulDom = document.createElement("ul");
-                    ulDom.className="dp_labelDays";
+                    ulDom.className = "dp_labelDays";
                     liDom = document.createElement("li");
                     liDom.setAttribute("ng-repeat", "ligne in labelDay");
                     var node = document.createTextNode("{{ligne}}");
@@ -41,7 +41,7 @@
                         ulDom = document.createElement("ul");
                         liDom = document.createElement("li");
                         liDom.setAttribute("ng-repeat", "day in calendar[" + i + "]");
-                        liDom.className="typeDay_{{day.type}}";
+                        liDom.className = "typeDay_{{day.type}}";
                         liDom.setAttribute("ng-click", "selectDay(day)");
                         var node = document.createTextNode("{{day.day}}");
                         liDom.appendChild(node);
@@ -55,47 +55,45 @@
                 }
 
 
-                function setScope(){
-                          
+                function setScope() {
+
                     childScope.calendar = datepicker.getMonthDays();
                     childScope.labelDay = datepicker.getLabelDays();
                     childScope.labelMonth = datepicker.getLabelMonth();
-                    childScope.year=datepicker.date.year;
-                  }
+                    childScope.year = datepicker.date.year;
+                }
                 function callback() {
                     childScope = $scope.$new();
-                
+
                     setScope();
                     childScope.selectDay = function (day) {
-                        switch(day.type){
+                        switch (day.type) {
                             case 0:
                                 datepicker.prevMonth();
-                                  setScope();
-                               break;
-                            case 1:
-                                $controller.$setViewValue(day.day+"/"+day.month+"/"+day.year);
-                                $controller.$render(); 
+                                setScope();
                                 break;
-                              case 2:
-                                  datepicker.nextMonth();
-                                  setScope();
-                              break;
+                            case 1:
+                                $controller.$setViewValue(day.day + "/" + day.month + "/" + day.year);
+                                $controller.$render();
+                                break;
+                            case 2:
+                                datepicker.nextMonth();
+                                setScope();
+                                break;
                         }
-                        };
+                    };
                     init();
                 }
 
                 $scope.$apply(callback);
-
                 return false;
             }
             ;
-
         }
         ;
     }
 
-        /* TO DO FACTORY OR SERVICE :: AGENDA */
+    /* TO DO FACTORY OR SERVICE :: AGENDA */
 
     var translate = {
         fr: {
@@ -113,7 +111,7 @@
     }
 
 
-    function calendar(langue,dateDebut, dateFin) {
+    function calendar(langue, dateDebut, dateFin) {
 
         var date = new Date();
 
@@ -138,19 +136,19 @@
         };
 
         this.langage = translate[langue];
-        
+
         /* TO DO PARAMS max / min */
 
     }
 
 
-  calendar.prototype.setLangage = function (langage) {
-           this.langage = translate[langue];
-      
- }
+    calendar.prototype.setLangage = function (langage) {
+        this.langage = translate[langue];
+
+    }
 
     calendar.prototype.nextYear = function () {
-        
+
         if (this.date.year >= this.dateLimit.max.year)
             return false;
         this.date.month = 0;
@@ -170,7 +168,7 @@
     }
 
     calendar.prototype.prevYear = function () {
-        
+
         if (this.date.year <= this.dateLimit.min.year)
             return false;
         this.date.month = 11;
@@ -179,7 +177,8 @@
     }
 
     calendar.prototype.prevMonth = function () {
-       if (this.date.year <= this.dateLimit.min.year && this.date.month <= this.dateLimit.min.month) return false;
+        if (this.date.year <= this.dateLimit.min.year && this.date.month <= this.dateLimit.min.month)
+            return false;
         if (this.date.month > 0)
             this.date.month--;
         else
@@ -200,15 +199,15 @@
     calendar.prototype.getLabelDays = function () {
         return this.langage.day;
     }
-    
+
     calendar.prototype.getLabelMonths = function () {
         return this.langage.month;
     }
-    
+
     calendar.prototype.getLabelMonth = function () {
         return this.langage.month[this.date.month];
     }
-    
+
 
     calendar.prototype.getMonthDays = function () {
         var result = Array();
@@ -219,7 +218,7 @@
         myDate.setDate(1);
 
         var prevMonth = {
-            count: (this.date.month-1)< 0 ?  this.getCountDays({year: (this.date.year - 1), month: 11}):this.getCountDays({year: this.date.year, month: (this.date.month - 1)})
+            count: (this.date.month - 1) < 0 ? this.getCountDays({year: (this.date.year - 1), month: 11}) : this.getCountDays({year: this.date.year, month: (this.date.month - 1)})
         }
 
         var curentMonth = {
@@ -241,7 +240,7 @@
                 var type = 0;
                 if (j === 0) {
                     if (i <= curentMonth.dayStart) {
-                        day = prevMonth.count - curentMonth.dayStart+ i;
+                        day = prevMonth.count - curentMonth.dayStart + i;
                         type = 0;
                     } else {
                         day = ++count.start;
@@ -256,13 +255,9 @@
                         type = 2;
                     }
                 }
-                result[j][i] = {day: day, type: type , month:this.date.month+1 , year:this.date.year};
+                result[j][i] = {day: day, type: type, month: this.date.month + 1, year: this.date.year};
             }
         }
         return result;
     }
-
-
-
-
 })();
