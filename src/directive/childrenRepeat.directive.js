@@ -12,21 +12,23 @@
 
  /**
  * #CONSTRUCT
- * @syntax  children-repeat 
- * @exemple children-repeat ="{repeat:item, in:list,track:children}"
- * @dom all
+*  @target dom (all)
+ * @syntax children-repeat {attribut} 
  * @param {Json} 
  * - Require: repeat {string} 
  * - Require: in {string} 
  * - Require: track {string}
- * 
- * #RETURN
- * @scope [param.repeat] {scope} (scope.[param.repeat])
- * @scope $[param.repeat]} 
- * - level {string} (children level ) 
- * - id {string}  (children index by level ) 
- * - parent: {scope} (scope.[param.repeat][level] | controller )
- * @dom  lv[:level] {class}   
+ * @exemple : [ children-repeat ="{repeat:'item', in:'list',track:'children'}" ]
+ *
+ * #RETURN {collection}
+ * @dom: 
+ * -attribut lv[:level] {class}   
+ * @scope 
+ * -attribut [param.repeat] {json} (scope.[param.repeat])
+ * -attribut $[param.repeat]} {json}
+ *  -- level {string} (children level ) 
+ *  -- id {string}  (children index by level ) 
+ *  -- parent: {scope} (scope.[param.repeat][level] | controller )
  * 
  * #CUSTOM
  * @dom lv=[?] {property} 
@@ -138,7 +140,7 @@
                                      /**       
                                      * #PROCESS                              
                                      * @transclude  childScope{scope}
-                                     * @dom  clone {dom collection}
+                                     * @dom  clone { collection}
                                      */
                                     transclude(childScope, function(clone) {
                                         
