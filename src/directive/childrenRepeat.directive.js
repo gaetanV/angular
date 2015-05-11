@@ -1,3 +1,41 @@
+/*
+ * directive/childrenRepeat.js
+ * This file is part of the angular directive package.
+ *
+ * (c) Gaetan Vigneron <gaetan@webworkshops.fr>
+ *  V 0.3.0
+ *  11/05/2015
+ *  
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+ /**
+ * #CONSTRUCT
+ * @syntax  children-repeat 
+ * @exemple children-repeat ="{repeat:item, in:list,track:children}"
+ * @dom all
+ * @param {Json} 
+ * - Require: repeat {string} 
+ * - Require: in {string} 
+ * - Require: track {string}
+ * 
+ * #RETURN
+ * @scope [param.repeat] {scope} (scope.[param.repeat])
+ * @scope $[param.repeat]} 
+ * - level {string} (children level ) 
+ * - id {string}  (children index by level ) 
+ * - parent: {scope} (scope.[param.repeat][level] | controller )
+ * @dom  lv[:level] {class}   
+ * 
+ * #CUSTOM
+ * @dom lv[?] {class} 
+ * - function: ? use this node  : use first node 
+ * @param
+ * - level {integer}
+ * - end {string} 
+ */
+
 (function() {
     'use strict';
 
@@ -11,42 +49,83 @@
             transclude: true,
             compile: compile  ,
          };  
-         function compile($element, $attr,transclude) {
-                    //ATTRIBUTS
-                    var myLoop = $attr.childrenRepeat;
-                    var match = myLoop.match(/^\s*(.+)\s+in\s+(.*?)\s*(\s+track\s+by\s+(.+)\s*)?$/);   /// A FAIRE TRACK BY
-                    var indexName = match[1];
-                    var collectionName = match[2];
-                    var scopeChildName = match[4];
-                    
-   
-                    return { pre:link};
+         function compile($element, $attrs,transclude) {
+                /**
+                * @Construct options
+                */
+                 var option,indexName,collectionName,scopeChildName;
+                 
+                try {
+                    if($attrs.childrenRepeat){option =   eval('(' + $attrs.childrenRepeat + ')'); };
+               
+                    if(option.repeat && option.track && option.in ){
+                            indexName = option.repeat;
+                            collectionName =option.in;
+                            scopeChildName =option.track;
+                    }
+                }catch(e){
+                     /**
+                     * @Error  : Syntax or Parameter Required missing
+                     */
+                     console.log(e);
+                     return;
+                }
+    
+                return { pre:link};
 
                     function link($scope,element){       
-                        //NODE PARENT
+      
                         var nodeParent = element;
                         var nodeParentName=nodeParent[0].nodeName;
-                    
-                        //ON SCOPE "collectionString" CHANGE
+ 
+                        /**
+                        * @Observe  "collectionName"
+                        */
                         $scope.$watch(collectionName, function(collection) {
-                           if(collection){
+                             /**
+                             * @Constraint  collection {integer}  : Existe
+                             * 
+                             * #PROCESS
+                             * @dom  nodeParent.children {dom collection} (remove)
+                             * @Function buildListNode
+                             */
+                            if(collection){
                                nodeParent.children().remove();
                                buildListNode(collection, nodeParent, 0);
                              };
+                             
+                             
+                             /**
+                             * #PROCESS
+                             *@dom  clone {collection}
+                            * @scope [param.repeat] {scope} (scope.[param.repeat])
+                             *@scope $[param.repeat]} 
+                             * - level {string} (children level ) 
+                             * - id {string}  (children index by level ) 
+                             * - parent: {scope} (scope.[param.repeat][level] | controller )
+                             * @dom  lv[:level] {class}  
+                              */
                             function buildListNode(collection, parent, nv) {
                           
-                                // If is not First Level , Build a list container
+                                /**
+                                * @Constraint  nv {integer}: Not First Level 
+                                * 
+                                * #PROCESS
+                                * @dom container { nodeParentName {string} }
+                                */
                                 if (nv !== 0) {
                                     var container = angular.element(document.createElement(nodeParentName));
                                     container.addClass("lv" + nv);
-                        
                                      angular.element(parent).append(container);
                                     parent = container;
                                 }
                                 nv++;
-
+                                
+                                /**
+                                * @Define  childScope {scope}
+                                */
                                 for (var i = 0; i < collection.length; i++) {
-                                    // Build a scope for each children
+
                                     var childScope = $scope.$new();
                                     childScope[indexName] = collection[i];
                                     childScope["$"+indexName] = {
@@ -55,9 +134,30 @@
                                         parent: collection
                                     };
 
-                                    //Build a item dom for each children ( transclude with new scope )
+                                 
+                                     /**       
+                                     * #PROCESS                              
+                                     * @transclude  childScope{scope}
+                                     * @dom  clone {dom collection}
+                                     */
                                     transclude(childScope, function(clone) {
-                                           var haveChild= collection[i][scopeChildName]?true :false;
+                                        
+                                            /** 
+                                            * @Define  haveChild
+                                            */
+                                           var haveChild= collection[i][scopeChildName] && collection[i][scopeChildName].length>0?true :false;
+                                           
+                                            /** 
+                                            * @Constraint  model  ? use this node  : use first node 
+                                            * @dom dom lv[?] {class} 
+                                            * @param
+                                            * - level {integer}
+                                            * - end {string} 
+                                            *   
+                                            * #PROCESS
+                                            * @dom  clone {collection}
+                                            * 
+                                            */
                                            var model=0;
                                            for (var j = 0; j < clone.length; j++) {
                                               
@@ -83,14 +183,22 @@
                                         
                                             parent.append(clone[id]);
                                         
-                                     
-                                    
-                                        //Clean scope on destroy (nodeParent.children().remove());
+                                        /**
+                                        * @Observe clone {dom} : destroy
+                                        * 
+                                        * #PROCESS
+                                        * @Destroy childScope {scope}
+                                        */
                                         clone.on('$destroy', function() {
                                             childScope.$destroy();
                                         });
-
-                                        // If have children (scope.scopeChildName) loop on buildListNode
+                                        
+                                        /**
+                                         * @Constraint  haveChild {boolean} : true
+                                         * 
+                                         * #PROCESS
+                                         * @recursion buildListNode {function}
+                                        */
                                         if (haveChild) {
                                                  buildListNode(collection[i][scopeChildName], clone[id], nv);
                                         }

@@ -20,7 +20,7 @@
                 children: [
                     {
                         title: "Child Title 1",
-                        children: [{title: "Child Title 3"}, {title: "Child Title 3"}]
+                        children: [{title: "Child Title 3" ,children: []}, {title: "Child Title 3"}]
                     },
                     {title: "Child Title 2"}
                 ]},

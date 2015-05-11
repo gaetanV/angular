@@ -12,10 +12,11 @@
 
  /**
  * @syntax  ng-drop-file 
+ * @exemple ng-drop-file="{maxsize:72000,mimeTypes:['image/png']}"
  * @dom input
  * @require ngModel
  * @param {Json} 
- * - Option: maxsize {Integer}
+ * - Option: maxsize {Integer} unit(K)
  * - Option: mimeTypes {array}
  */
 
@@ -32,11 +33,9 @@
             $element.addClass("drop-file-hidden");
             var multipleFile = $attrs.multiple ? true : false;
             var option={};
-            if($attrs.ngDropFile){
-                   option =   eval('(' + $attrs.ngDropFile + ')');
-            }
+            if($attrs.ngDropFile){option =   eval('(' + $attrs.ngDropFile + ')'); }
           
-            console.log(option);
+   
             var dom_DropFile = document.createElement("DIV");
             var dom_DropCache = document.createElement("DIV");
 
