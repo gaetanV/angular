@@ -4,7 +4,7 @@
         <div class="controller" ng-app="app" ng-controller="ChildrenRepeat">
           
                   <ul class="list-child" children-repeat ="{ repeat: 'item', in: 'sample' , track:'children'  }">
-                       <li >
+                       <li>
                                     {{item.title}}  [ index: {{$item.id}} , level:{{$item.level}}  ] 
                                     <span ng-click="pushIn($item.parent)"> push</span> 
                              
