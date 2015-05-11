@@ -29,7 +29,7 @@
  * @dom  lv[:level] {class}   
  * 
  * #CUSTOM
- * @dom lv[?] {class} 
+ * @dom lv=[?] {property} 
  * - function: ? use this node  : use first node 
  * @param
  * - level {integer}
@@ -149,10 +149,12 @@
                                            
                                             /** 
                                             * @Constraint  model  ? use this node  : use first node 
-                                            * @dom dom lv[?] {class} 
-                                            * @param
-                                            * - level {integer}
-                                            * - end {string} 
+                                            * #CUSTOM
+                                             * @dom lv=[?] {property} 
+                                             * - function: ? use this node  : use first node 
+                                             * @param
+                                             * - level {integer}
+                                             * - end {string} 
                                             *   
                                             * #PROCESS
                                             * @dom  clone {collection}
