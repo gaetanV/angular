@@ -5,17 +5,17 @@
           
                   <ul class="list-child" children-repeat ="item in sample track by children">
                        <li>
-                                    {{item.title}}  [ index: {{$item.id}} , level:{{$item.level}}  ] 
-                                    <span ng-click="pushIn($item.parent)"> push</span> 
+                                    {{item.title}}  [ index: {{$index}} , depth : {{$depth}}  ] 
+                                    <span ng-click="pushIn($parent)"> push</span> 
                              
                         </li>
                         
-                         <li  lv="end" >
+                         <li  depth="end" >
                              END
-                                    {{item.title}}  [ index: {{$item.id}} , level:{{$item.level}}  ] 
-                                    
+                                    {{item.title}}  [ index: {{$index}} , depth : {{$depth}}  ] 
+                                       <span ng-click="pushIn($parent)"> push</span> 
                                     <div ng-click="pushAfter(item)">
-                                               [ AddChild level: {{$item.level+1}} ] 
+                                               [ AddChild level: {{$depth+1}} ] 
                                     </div>
                         </li>
                         

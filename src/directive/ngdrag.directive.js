@@ -1,4 +1,45 @@
-(function() {
+/*
+ * directive/childrenRepeat.js
+ * This file is part of the angular directive package.
+ *
+ * (c) Gaetan Vigneron <gaetan@webworkshops.fr>
+ *  V 0.3.0
+ *  12/05/2015
+ *  
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+/**
+ * #CONSTRUCT
+ * 
+ *  ##DRAG
+ *  @target dom 
+ *  @syntax ng-drag {attribut}  
+ *          - optional : namespace {string} 
+ *          - optional : transport  {entiy|entities} 
+ *          - optional : callback {function} on drop
+ *                -Scope :Apply
+ *  @exemple : [  ng-drag = "namespace: 'groupe1'  , transport='item' callback:'remove( item , $index  )'  " , ng-drag = ""  ]
+ *          
+ *  ##DROP
+ *  @target dom 
+ *  @syntax ng-drop {attribut}  
+ *          - optional : namespace {string} 
+ *          - optional : contraint {function}  contraint for callback
+ *                -Require: return (true|false)
+ *                -Scope :Inject
+ *                      $drag {scope}
+ *                      $transport {entity}
+ *          - optional : callback {function} on drop
+ *                -Scope :Inject
+ *                      $drag {scope}
+ *                      $transport {entity}
+ *                -Scope :Apply
+ *  @exemple : [  ng-drop = "namespace:'groupe1' ,  callback:'add( $transport , list  )' , contraint:'notChild($drag.item , list)' " , ng-drop = ""]
+ *
+ */
+(function () {
     'use strict';
     angular
             .module('app')
@@ -11,90 +52,150 @@
             restrict: 'A',
             transclude: true,
             template: '<span ng-transclude></span>',
-            link:link
-        };           
-  
-      function link($scope, element, attrs,module,$transclude) {
-     
-                element.on('mousedown', mousedown);
-                function mousedown(e) {
-                    new drag(e, attrs.ngDrag, dropTo);
-                    //attrs.ngDrag AS ID GROUP//
-                    return false;
-                };
+            link: link
+        };
+
+        function link($scope, element, attrs, module, $transclude) {
+            /**
+             * @Define options
+             */
+            var optionDrag = parseDomJson(attrs.ngDrag);
+            var optionDrop = {};
+
+            if (!optionDrag.namespace)
+                optionDrag.namespace = "";
+
+            /**
+             * @Observe element{dom} on mousedown  
+             */
+            element.on('mousedown', mousedown);
+            function mousedown(e) {
+                new drag(e, optionDrag.namespace, isValid, dropTo);
+                return false;
+            }
+            ;
+
+
+             /**  
+            *  @param  action {string} function as string
+            *  @param  target {dom}
+            *  @param   callback {function}
+             * @return   /callback({bollean})
+             *  Eval action in target scope and apply to the view
+             */
+            function exeScopeFunction(action, target, callback) {
+                var scopeDrop = angular.element(target).scope();
+                scopeDrop.$drag = $scope;
+                scopeDrop.$transport = $scope[optionDrag.transport];
+                var $fn = function () {
+                    var fn = $parse(action);
+                    var result = fn(scopeDrop, {$event: target});
+                    if (callback)
+                        callback(result);
+                }
+                scopeDrop.$apply($fn);
+            }
+            ;
+
+             /**
+             * @On drag{object}  drop-over  
+             * @param  target {dom}
+             * @param  callback {function}
+             * @return /callback({bollean})
+             */
+            var isValid = function (target, callback) {
+                optionDrop = parseDomJson(target.getAttribute("ng-drop"));
+                if (!optionDrop.constraint)
+                    callback(true);
+                else
+                    exeScopeFunction(optionDrop.constraint, target, function ($flag) {
+                        callback($flag);
+                    })
+
+            }
+
+            /**
+             * @On drag{object}  drop  
+             * @param  target {dom}
+             *  - Eval drag callback 
+             *  - Eval drop callback | Build a Clone 
+             */
+            var dropTo = function (target) {
+                optionDrop = parseDomJson(target.getAttribute("ng-drop"));
+
+
+                if (optionDrag.callback) {
+                    exeScopeFunction(optionDrag.callback, target);
+                }
+                if (optionDrop.callback) {
+                    exeScopeFunction(optionDrop.callback, target);
+                } else {
+                    clone(target);
+                }
+
                 /**
-                 * call back
-                 **/
-                var dropTo = function(target) {
-                    var actionDrop = target.getAttribute("ng-drop-action");
-                    var actionDrag = attrs.ngDragAction;
-                    
-                    if (actionDrop) { //IF ACTION DROP
-                        parseAction(actionDrop,target,"drop");
-                    } else {  //IF NOT ACTION DROP CLONE
-                         clone(target);
-                    }
-                    if (actionDrag) { //IF ACTION DRAG
-                        parseAction(actionDrag,target,"drag");
-                    };
-                };
-                
-                function clone(target){
-                        var cloneElement = angular.element(element[0].cloneNode(false));
-                        var callback = $transclude(function(clone) {
-                            cloneElement.append(clone);
-                            cloneElement = $compile(cloneElement)($scope);
-                            angular.element(target).append(cloneElement);
-                        });
-                        $scope.$apply(callback);
-                };
-                
-                function parseAction(action,target,type){
-                   var fn = $parse(action);
-                        var callback = function() {
-                            var scopeDrop = angular.element(target).scope();
-                           switch(type){
-                               case "drop":
-                                   scopeDrop.ngCall = $scope;
-                                    fn(scopeDrop, {$event: target});
-                                   break;
-                               case "drag":
-                               default:
-                                    fn($scope, {$event: target});
-                                   break;
-                           }
-                        
-                     };
+                 * @Constraint Build a Clone of this element and append to target
+                 */
+                function clone() {
+                    var cloneElement = angular.element(element[0].cloneNode(false));
+                    var callback = $transclude(function (clone) {
+                        cloneElement.append(clone);
+                        cloneElement = $compile(cloneElement)($scope);
+                        angular.element(target).append(cloneElement);
+                    });
                     $scope.$apply(callback);
-                };
-
+                }
+                ;
             };
-    } ;
+        }
+        ;
+    }
+    ;
 
+    /**
+     *  @param   e {event dom}
+     *  @param  namesapce {string}
+     *  @param   contraint {function}
+     *  @param   callback {function}
+     */
+    var drag = function (e, namespace, contraint, callback) {
 
-    var drag = function(e, idGroup, callback) {
         var vm = this;
         var dom = e.currentTarget;
-        
         vm._xClick = -(dom.offsetLeft - e.pageX);
         vm._yClick = -(dom.offsetTop - e.pageY);
         vm.haveMove = false;
-        
-        vm.ngdropList = vm.initDropList(idGroup);
+        vm.valid = false;
+        vm.isValid = contraint;
         vm.dropTo = callback;
+        vm.overDrop;
+        /**
+         * @Define ngdropList by namespace
+         */
+        vm.ngdropList = vm.initDropList(namespace);
 
-        vm.cloneDom = vm.clone(dom); //Dom move
-
+         /**
+         * @Build a clone html 
+         */
+        vm.cloneDom = vm.clone(dom); 
         vm.move(e);
-        vm.overDrop; //Dom target
 
+        /**
+         * @Observe this.haveMove 
+         */
         vm.checkTimer = setInterval(function check() {
             if (vm.haveMove)
                 vm.haveMove = false;
-        }, 50); // restrict calls to checkPosition
-        //
-        ///EVENTS///
-        vm.handleEvent = function(e) {
+        }, 50); 
+
+        /**
+         * @Observe document : mousedown mousemove  mouseup
+         */
+        document.addEventListener('mousedown', vm);
+        document.addEventListener('mousemove', vm);
+        document.addEventListener('mouseup', vm);
+
+        vm.handleEvent = function (e) {
             switch (e.type) {
                 case 'mousedown':
                     e.stopPropagation();
@@ -104,30 +205,35 @@
                     this.move(e);
                     break;
                 case 'mouseup':
-                    this.end(e);
+                    this.end();
                     break;
             }
         };
-        document.addEventListener('mousedown', vm);
-        document.addEventListener('mousemove', vm);
-        document.addEventListener('mouseup', vm);
     };
 
-
-    drag.prototype.end = function(e) {
+    /**
+     * @On action drop and drop is valid
+     * remove event and callback dropTo(target)
+    */
+    drag.prototype.end = function () {
         document.body.removeChild(this.cloneDom);
         this.removeDropList();
         document.removeEventListener('mousedown', this);
         document.removeEventListener('mouseup', this);
         document.removeEventListener('mousemove', this);
         clearInterval(this.checkTimer)
-        if (this.overDrop) {
+        if (this.valid) {
             this.dropTo(this.overDrop);
-        };
-  };
+        }
+        ;
+    };
 
-
-    drag.prototype.clone = function(dom) {
+     /**
+     * @On construct class
+     * @parm dom {html element}
+     * Create a clone
+    */
+    drag.prototype.clone = function (dom) {
         var element = document.createElement("div");
         element.appendChild(dom.cloneNode(true));
         element.style.width = dom.offsetWidth + "px";
@@ -138,33 +244,54 @@
         return element;
     };
 
-
-    drag.prototype.checkPosition = function(e) {
+     /**
+     * @On   mouse position change
+     * @parm e {html event}
+    */
+    drag.prototype.checkPosition = function (e) {
         var drop = this.ngdropList;
         var x = e.clientX + window.pageXOffset;
         var y = e.clientY + window.pageYOffset;
         if (this.overDrop) {
             angular.element(this.overDrop).removeClass("ng-drop-active");
+            angular.element(this.overDrop).removeClass("ng-drop-error");
             this.overDrop = false;
+            this.valid = false;
         }
         for (var i = 0; i < drop.length; i++) {
 
             if (x > drop[i].offsetLeft && x < (drop[i].offsetWidth + drop[i].offsetLeft) && y > drop[i].offsetTop && y < (drop[i].offsetTop + drop[i].offsetHeight)) {
                 if (this.overDrop !== drop[i]) {
-                    angular.element(drop[i]).addClass("ng-drop-active");
-                    this.overDrop = drop[i];
+                    var vm = this;
+                    this.isValid(drop[i], function (flag) {
 
-                    return drop[i];
+                        if (flag) {
+                            angular.element(drop[i]).addClass("ng-drop-active");
+                            vm.overDrop = drop[i];
+                            vm.valid = true;
+                        } else {
+                            vm.overDrop = drop[i];
+                            vm.valid = false;
+                            angular.element(drop[i]).addClass("ng-drop-error");
+                        }
+
+                    });
+
                 } else {
-                    return false;
+                    this.valid = false;
                 }
             }
         }
 
         return false;
     }
-
-    drag.prototype.move = function(e) {
+    
+     /**
+     * @On document move 
+     * @parm e {html event}
+     * Move clone
+    */
+    drag.prototype.move = function (e) {
         if (!this.haveMove) {
             this.haveMove = true;
             this.checkPosition(e);
@@ -173,21 +300,62 @@
         this.cloneDom.style.top = (e.clientY - this._yClick) + "px";
     };
 
+     /**
+     * @On construct class
+     * @parm namespace {string}
+     * @return dropList{array
+     * Initializes all drop possibilities
+    */
+    drag.prototype.initDropList = function (namespace) {
+        var dropList = Array();
+        var ngdropList = document.querySelectorAll("[ng-drop]");
 
-    drag.prototype.initDropList = function(idGroup) {
-        var ngdropList = document.querySelectorAll("[ng-drop='" + idGroup + "']");
         for (var i = 0; i < ngdropList.length; i++) {
-            angular.element(ngdropList[i]).addClass("ng-drop");
+            var optionDrop = parseDomJson(ngdropList[i].getAttribute("ng-drop"));
+            var dropNamespace = optionDrop.namespace ? optionDrop.namespace : "";
+            if (dropNamespace === namespace) {
+                dropList.push(ngdropList[i]);
+                angular.element(ngdropList[i]).addClass("ng-drop");
+            }
+
         }
         ;
-        return  ngdropList;
+        return  dropList;
     };
 
-    drag.prototype.removeDropList = function() {
+     /**
+     * @On end
+     * remove all class
+    */
+
+    drag.prototype.removeDropList = function () {
         for (var i = 0; i < this.ngdropList.length; i++) {
             angular.element(this.ngdropList[i]).removeClass("ng-drop");
             angular.element(this.ngdropList[i]).removeClass("ng-drop-active");
-        };
+            angular.element(this.overDrop).removeClass("ng-drop-error");
+        }
+        ;
         this.ngdropList = [];
     }
+    
+    
+     /**
+     * @parm $domjson {String}
+     * @return {object}
+    */
+    function parseDomJson($domjson) {
+        var options = {};
+        var tmp, arr, regex;
+        tmp = $domjson.replace(/^({)(.*)(})$/, '$2');
+        regex = /(.+?)[:]{1}\s*['"]+\s*(.+?)\s*['"]+\s*([,]{1}|$)/g
+        var arr;
+        while ((arr = regex.exec(tmp)) !== null) {
+            options[arr[1].trim()] = arr[2].trim()
+        }
+
+        return options;
+
+    }
+
+
 })();

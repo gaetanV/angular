@@ -12,30 +12,37 @@
 
 /**
  * #CONSTRUCT
- * @target dom {all}
- * @syntax children-repeat {attribut} 
- * @param {String} 
- * - Require: repeat {string} 
- * - Require: in {string} 
- * - Require: track by {string}
- * @exemple : [  children-repeat = "item in sample track by children" ]
- *
- * #RETURN {multi-dimensional}
- * @dom: 
- * - Attribute lv[:depth] {class}   
- * @scope 
- * - Attribute [::param.repeat] {object} (scope.[::param.repeat])
- * - Attribute $[::param.repeat] {object}
- *  -- level {string} (:depth ) 
- *  -- id {string}  (:index ) 
- *  -- parent: {scope} (scope.[::param.in]:depth | controller )
  * 
- * #CUSTOM
- * @target dom.children() {all}
- * @syntax lv {attribut}  
- * exist ? use this node  : use first node
- * @param {string} ( :depth {integer} | end {string} )
- * @exemple : [ lv = "1" ,  lv = "end"   ]
+ *  @target dom 
+ *  @syntax children-repeat {attribut}  
+ *      Require: 
+ *          repeat {string} 
+ *          in {string} 
+ *          track by {string}
+ *  @exemple : [  children-repeat = "item in sample track by children" ]
+ *
+ *
+  * ## DOM ( Child ) : Options 
+ *  @syntax depth {attribut}  
+ *      :depth {integer} | end {string} 
+ *  @exemple : [ depth = "1" ,  depth = "end"   ]
+*   If exist use this node else use first node
+ *   
+ *   ## DOM ( Child ) : Inject Variables
+  *  @scope 
+ *      \children-repeat\repeat {object} 
+ *      $index {integer} 
+ *      $depth {integer} 
+ *      $parent {object} (object parent)
+ *    @exemple : [  {{item.title}} , {{$index}} , {{$depth}}  , {{$parent.children}}  , {{$parent.title}}]
+ *      
+ * # RESULT 
+ * 
+ * ## DOM ( Child )
+ * @class  depth{{ :depth | integer }}  
+ * @exemple : class="depth1"
+ *              
+ *
  */
 
 (function () {
@@ -94,23 +101,23 @@
                     /**
                      * @parm collection {array}
                      * @parm parent {angular element}
-                     * @parm nv  {integer} 
-                     * @recursion collection :depth
+                     * @parm depth  {integer} 
+                     * @recursion collection [:depth]
                      * Create dom with scope of each index of collection
                      */
 
-                    function buildListNode(collection, parent, nv) {
+                    function buildListNode(collection, parent, depth) {
 
                         /**
-                         * @Constraint  nv !=0 build container depth else use container depth as parent
+                         * @Constraint  depth !=0 build container depth else use container depth as parent
                          */
-                        if (nv !== 0) {
+                        if (depth !== 0) {
                             var container = angular.element(document.createElement(nodeParentName));
-                            container.addClass("lv" + nv);
+                            container.addClass("depth" + depth);
                             angular.element(parent).append(container);
                             parent = container;
                         }
-                        nv++;
+                        depth++;
 
                         /**
                          * @Define  childScope {scope}
@@ -119,11 +126,9 @@
 
                             var childScope = $scope.$new();
                             childScope[indexName] = collection[i];
-                            childScope["$" + indexName] = {
-                                id: i,
-                                level: nv,
-                                parent: collection
-                            };
+                            childScope["$index"]= i;
+                            childScope["$depth"]=depth;
+                            childScope["$parent"]=collection;
 
                             /**       
                              *@param childscope {scope}
@@ -148,14 +153,14 @@
                                         if (model == 0)
                                             model = j;
                                         if (!haveChild) {
-                                            if (clone[j].getAttribute("lv") == "end") {
+                                            if (clone[j].getAttribute("depth") == "end") {
                                                 var custom = j;
                                                 break;
 
                                             }
                                         }
-                                        if (clone[j].getAttribute("lv")) {
-                                            if (clone[j].getAttribute("lv") == nv - 1) {
+                                        if (clone[j].getAttribute("depth")) {
+                                            if (clone[j].getAttribute("depth") == depth - 1) {
                                                 var custom = j;
                                                 break;
                                             }
@@ -177,7 +182,7 @@
                                  * @Constraint  haveChild ? recursion
                                  */
                                 if (haveChild) {
-                                    buildListNode(collection[i][scopeChildName], clone[id], nv);
+                                    buildListNode(collection[i][scopeChildName], clone[id], depth);
                                 }
                             });
                         }

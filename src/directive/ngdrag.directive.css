@@ -4,3 +4,7 @@
 .ng-drop-active{
     background:#ddd;
 }
+
+.ng-drop-error{
+    background:#B94A48;
+}
