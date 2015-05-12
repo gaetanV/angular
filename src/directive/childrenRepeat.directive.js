@@ -30,10 +30,10 @@
  *   
  *   ## DOM ( Child ) : Inject Variables
   *  @scope 
- *      \children-repeat\repeat {object} 
+  *     \children-repeat\repeat {object} 
  *      $index {integer} 
  *      $depth {integer} 
- *      $parent {object} (object parent)
+ *      $collection {object} (object parent)
  *    @exemple : [  {{item.title}} , {{$index}} , {{$depth}}  , {{$parent.children}}  , {{$parent.title}}]
  *      
  * # RESULT 
@@ -65,10 +65,10 @@
 
             try {
                     if(!$attrs.childrenRepeat) throw "you should specified children-repeat attribute";
-                    var match = $attrs.childrenRepeat.match(/^\s*(.+)\s+in\s+(.*?)\s*(\s+track\s+by\s+(.+)\s*)?$/);  
+                    var match = $attrs.childrenRepeat.match(/^\s*(.+)\s+in\s+(.*?)\s*track\s+by\s+(.+)\s*?$/);  
                     indexName =match[1];
                     collectionName =match[2];
-                    scopeChildName =  match[4];
+                    scopeChildName =  match[3];
                     if(!indexName || !collectionName || !scopeChildName) throw "you should specified all attributes for children-repeat attribute";
             } catch (e) {
                 /**
@@ -93,6 +93,7 @@
                      * @Constraint  collection ?  replace dom  ( nodeParent.children ) with new collection
                      */
                     if (collection) {
+                
                         nodeParent.children().remove();
                         buildListNode(collection, nodeParent, 0);
                     }
@@ -128,8 +129,8 @@
                             childScope[indexName] = collection[i];
                             childScope["$index"]= i;
                             childScope["$depth"]=depth;
-                            childScope["$parent"]=collection;
-
+                            childScope["$collection"]=collection;
+                          
                             /**       
                              *@param childscope {scope}
                              *@callback 
@@ -170,7 +171,7 @@
                                 }
                                 var id = custom ? custom : model;
                                 parent.append(clone[id]);
-
+    
                                 /**
                                  * @Observe clone on destroy : destroy childScope
                                  */

@@ -1,5 +1,5 @@
 /*
- * directive/childrenRepeat.js
+ * directive/ngdrag.directive.js
  * This file is part of the angular directive package.
  *
  * (c) Gaetan Vigneron <gaetan@webworkshops.fr>

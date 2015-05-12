@@ -31,16 +31,17 @@
 
 
         $scope.pushAfter = function($self) {
-
+     
             if ($self.children) {
-          
                 $scope.pushIn($self.children);
             } else
                 $self.children = [{title: "pushAfter Title 1"}];
         };
 
         $scope.pushIn = function($parent) {   
+      
             $parent.push({ title: "pushIn Title 2"});
+          
         }
 
     }
