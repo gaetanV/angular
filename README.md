@@ -87,6 +87,7 @@ directive/finderField.directive.js
  *
  */
 ```
+<<<<<<< HEAD
 ###finder-field
 directive/matchField.directive.js
 ```
@@ -107,3 +108,5 @@ directive/matchField.directive.js
  *
  */
 ```
+=======
+>>>>>>> origin/master
