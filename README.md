@@ -37,7 +37,7 @@ directive/ngdrag.directive.js
 ```
 
 ###children-repeat
-directive/childrenRepeat.js
+directive/childrenRepeat.directive.js
 ```
 /**
  * #CONSTRUCT
@@ -75,7 +75,7 @@ directive/childrenRepeat.js
  */
 ```
 ###finder-field
-directive/finderField.js
+directive/finderField.directive.js
 ```
 /**
  * #CONSTRUCT
