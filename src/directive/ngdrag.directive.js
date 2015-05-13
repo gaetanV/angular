@@ -217,15 +217,12 @@
     */
     drag.prototype.end = function () {
         document.body.removeChild(this.cloneDom);
-        this.removeDropList();
         document.removeEventListener('mousedown', this);
         document.removeEventListener('mouseup', this);
         document.removeEventListener('mousemove', this);
         clearInterval(this.checkTimer)
-        if (this.valid) {
-            this.dropTo(this.overDrop);
-        }
-        ;
+        if (this.valid) {    this.dropTo(this.ngdropList[this.overDrop]);  };
+         this.removeDropList();
     };
 
      /**
@@ -249,39 +246,58 @@
      * @parm e {html event}
     */
     drag.prototype.checkPosition = function (e) {
+        var inside=false;
+        var vm = this;
         var drop = this.ngdropList;
         var x = e.clientX + window.pageXOffset;
         var y = e.clientY + window.pageYOffset;
-        if (this.overDrop) {
-            angular.element(this.overDrop).removeClass("ng-drop-active");
-            angular.element(this.overDrop).removeClass("ng-drop-error");
-            this.overDrop = false;
-            this.valid = false;
-        }
+               
+   
+
         for (var i = 0; i < drop.length; i++) {
-
             if (x > drop[i].offsetLeft && x < (drop[i].offsetWidth + drop[i].offsetLeft) && y > drop[i].offsetTop && y < (drop[i].offsetTop + drop[i].offsetHeight)) {
-                if (this.overDrop !== drop[i]) {
-                    var vm = this;
+                inside=true;
+                if (this.overDrop != i) { 
+                    /**
+                    * @On  different drop contenaire
+                   */
                     this.isValid(drop[i], function (flag) {
-
                         if (flag) {
                             angular.element(drop[i]).addClass("ng-drop-active");
-                            vm.overDrop = drop[i];
+                            vm.overDrop =i;
                             vm.valid = true;
                         } else {
-                            vm.overDrop = drop[i];
+                            vm.overDrop = i;
                             vm.valid = false;
                             angular.element(drop[i]).addClass("ng-drop-error");
                         }
-
+                           
                     });
 
-                } else {
-                    this.valid = false;
-                }
+                } 
+                return;
             }
         }
+        
+        if(!inside){
+                   /**
+                    * @On move outside current drop contenaire
+                   */
+                  if(this.overDrop!==-1){
+                        angular.element(drop[vm.overDrop]).removeClass("ng-drop-error");
+                        angular.element(drop[vm.overDrop]).removeClass("ng-drop-active");
+                        vm.valid = false;
+                    }
+                  
+                  this.overDrop=-1;
+              
+        }
+        
+                
+           
+                   
+                  
+
 
         return false;
     }
@@ -329,10 +345,12 @@
     */
 
     drag.prototype.removeDropList = function () {
+        angular.element(this.ngdropList[this.overDrop]).removeClass("ng-drop-error");
+        
         for (var i = 0; i < this.ngdropList.length; i++) {
             angular.element(this.ngdropList[i]).removeClass("ng-drop");
             angular.element(this.ngdropList[i]).removeClass("ng-drop-active");
-            angular.element(this.overDrop).removeClass("ng-drop-error");
+            
         }
         ;
         this.ngdropList = [];
