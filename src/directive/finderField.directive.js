@@ -1,3 +1,26 @@
+/*
+ * directive/finderField.js
+ * This file is part of the angular directive package.
+ *
+ * (c) Gaetan Vigneron <gaetan@webworkshops.fr>
+ *  V 0.2.0
+ *  11/05/2015
+ *  
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+/**
+ * #CONSTRUCT
+ * 
+ *  @target dom {select}
+ *  @syntax  finder-field {attribut}  
+ *      Option:  {integer} | 4
+ * @option  multiple {attribut} 
+ *  @exemple : [   finder-field= "3" multiple ,  finder-field ]
+ *
+ */
+
 (function () {
     'use strict';
     angular
@@ -7,6 +30,8 @@
 
     function FinderField($compile) {
         var link = function ($scope, $element, $attrs, $controller) {
+            var multiple = $attrs.multiple ? true : false;
+
 
             if ($element[0].nodeName == "SELECT") {
                 var options = $element.find("option");
@@ -16,7 +41,7 @@
                     var limit = parseInt($attrs.finderField) ? parseInt($attrs.finderField) : 4;
                     var findDom, inputDom, ulDom, liDom;
                     var childScope = $scope.$new();
-                    
+
                     var initScope = function () {
                         var finder = Array();
                         for (var i = 0; i < options.length; i++) {
@@ -29,9 +54,37 @@
                         childScope.searchText.text = childScope.curentModel;
 
                         childScope.finderFields = finder;
+                        if (multiple) {
+                            childScope.selectFields = new Array();
+                            childScope.removeField = function (select, $index) {
+                                childScope.selectFields.splice($index, 1);
+                                var currentValue = $controller.$modelValue ? $controller.$modelValue : new Array();
+                                currentValue.splice(currentValue.indexOf(select.value), 1);
+                                childScope.finderFields.push(select);
+                                $controller.$setViewValue(currentValue);
+                            }
 
-                        childScope.selectField = function (select) {
-                            $controller.$setViewValue(select.value);
+
+                            childScope.$watchCollection("selectFields", function (e) {
+
+                            })
+                        }
+
+
+                        childScope.selectField = function (select, $index) {
+                            if (multiple) {
+                                var currentValue = $controller.$modelValue ? $controller.$modelValue : new Array();
+                                if (currentValue.indexOf(select.value) === -1)
+                                    currentValue.push(select.value);
+
+                                childScope.finderFields.splice(childScope.finderFields.indexOf(select), 1);
+                                if (currentValue.indexOf(select) === -1)
+                                    childScope.selectFields.push(select);
+
+                                $controller.$setViewValue(currentValue);
+                            } else {
+                                $controller.$setViewValue(select.value);
+                            }
                             childScope.curentModel = select.text;
                             inputDom.value = childScope.curentModel;
                             ulDom.style.display = "none";
@@ -47,12 +100,23 @@
 
                         inputDom.setAttribute("ng-model", "searchText.text");
 
+                        if (multiple) {
+                            ulDom = document.createElement("ul");
+                            liDom = document.createElement("li");
+                            liDom.setAttribute("ng-repeat", "selectField in selectFields");
+                            liDom.setAttribute("ng-click", "removeField(selectField,$index)");
+                            var node = document.createTextNode("{{selectField.text}}");
+                            liDom.appendChild(node);
+                            ulDom.appendChild(liDom);
+                            findDom.appendChild(ulDom);
+                        }
+
                         ulDom = document.createElement("ul");
                         ulDom.style.display = "none";
                         liDom = document.createElement("li");
 
                         liDom.setAttribute("ng-repeat", "finderField in finderFields  | filter:searchText | limitTo:" + limit + "");
-                        liDom.setAttribute("ng-click", "selectField(finderField)");
+                        liDom.setAttribute("ng-click", "selectField(finderField,$index)");
                         var node = document.createTextNode("{{finderField.text}}");
 
                         liDom.appendChild(node);
@@ -66,7 +130,7 @@
                         angular.element(findDom).on('$destroy', function () {
                             childScope.$destroy();
                         });
-                        
+
                         var hide = function (e) {
                             e.stopPropagation();
                             if (e.target == inputDom || e.target.parentNode == ulDom) {
@@ -76,7 +140,7 @@
                             inputDom.value = childScope.curentModel;
                             document.removeEventListener('mousedown', hide);
                         }
-
+                        
                         var show = function (e) {
                             ulDom.style.display = "block";
                             document.addEventListener('mousedown', hide);

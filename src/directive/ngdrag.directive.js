@@ -72,9 +72,7 @@
             function mousedown(e) {
                 new drag(e, optionDrag.namespace, isValid, dropTo);
                 return false;
-            }
-            ;
-
+            } ;
 
              /**  
             *  @param  action {string} function as string
@@ -252,14 +250,12 @@
         var x = e.clientX + window.pageXOffset;
         var y = e.clientY + window.pageYOffset;
                
-   
-
         for (var i = 0; i < drop.length; i++) {
             if (x > drop[i].offsetLeft && x < (drop[i].offsetWidth + drop[i].offsetLeft) && y > drop[i].offsetTop && y < (drop[i].offsetTop + drop[i].offsetHeight)) {
                 inside=true;
                 if (this.overDrop != i) { 
                     /**
-                    * @On  different drop contenaire
+                    * @On  different drop container
                    */
                     this.isValid(drop[i], function (flag) {
                         if (flag) {
@@ -273,7 +269,6 @@
                         }
                            
                     });
-
                 } 
                 return;
             }
@@ -281,24 +276,15 @@
         
         if(!inside){
                    /**
-                    * @On move outside current drop contenaire
+                    * @On move outside current drop container
                    */
                   if(this.overDrop!==-1){
                         angular.element(drop[vm.overDrop]).removeClass("ng-drop-error");
                         angular.element(drop[vm.overDrop]).removeClass("ng-drop-active");
                         vm.valid = false;
                     }
-                  
-                  this.overDrop=-1;
-              
+                  this.overDrop=-1;        
         }
-        
-                
-           
-                   
-                  
-
-
         return false;
     }
     
