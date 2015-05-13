@@ -1,6 +1,5 @@
 # angular directive package
 
-##specification 
 ###ng-drag
 directive/ngdrag.directive.js
 ```
