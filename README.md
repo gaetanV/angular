@@ -1,7 +1,7 @@
 # directive_angular
  V 0.0.4
 ##specification 
-###ngdrag
+###ng-drag
 directive/ngdrag.directive.js
 ```
 /**
@@ -36,7 +36,7 @@ directive/ngdrag.directive.js
  
 ```
 
-###child-repeat
+###children-repeat
 directive/childrenRepeat.js
 ```
 /**
@@ -74,7 +74,7 @@ directive/childrenRepeat.js
  *
  */
 ```
-###finderField
+###finder-field
 directive/finderField.js
 ```
 /**
