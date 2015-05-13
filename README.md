@@ -1,5 +1,5 @@
-# directive_angular
- V 0.0.4
+# angular directive package
+
 ##specification 
 ###ng-drag
 directive/ngdrag.directive.js
