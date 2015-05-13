@@ -87,8 +87,8 @@ directive/finderField.directive.js
  *
  */
 ```
-<<<<<<< HEAD
-###finder-field
+
+###match-field
 directive/matchField.directive.js
 ```
 /**
@@ -103,10 +103,9 @@ directive/matchField.directive.js
 * # RESULT 
  * 
  * ##  Form 
- * $validators.match {intger}
+ * $validators.match {boolean}
  * @exemple : [ form.passCtr.$error.match ]
  *
  */
 ```
-=======
->>>>>>> origin/master
+
