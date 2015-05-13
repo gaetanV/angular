@@ -1,5 +1,5 @@
 /*
- * directive/childrenRepeat.js
+ * directive/childrenRepeat.directive.js
  * This file is part of the angular directive package.
  *
  * (c) Gaetan Vigneron <gaetan@webworkshops.fr>
@@ -34,7 +34,7 @@
  *      $index {integer} 
  *      $depth {integer} 
  *      $collection {object} (object parent)
- *    @exemple : [  {{item.title}} , {{$index}} , {{$depth}}  , {{$parent.children}}  , {{$parent.title}}]
+ *    @exemple : [  {{item.title}} , {{$index}} , {{$depth}}  , {{$collection.children}}  , {{$collection.title}}]
  *      
  * # RESULT 
  * 
