@@ -1,0 +1,22 @@
+<section>
+    
+      <h1>Children-repeat + Ng-drop directive</h1>
+        <div class="controller childDrop" ng-app="app" ng-controller="ChildrenDrop">
+
+            <div class="scope"> {{list}}</div>
+                <div  ng-hide="loading">  
+                    <div  ng-drop="callback:  'push( $transport , list , $drag )' , constraint: 'isNotFirstDepth($drag)' ">Root</div>
+                        <ul class="list-child" children-repeat="item in list track by children">
+                                       <li >
+                                             <div  ng-drag= "   transport : 'item'   " ng-drop=" constraint: 'isNotChild(item,$transport)' , callback : 'pushChildren( $transport , item , $drag )'   "   >
+                                                   {{item.name}}  [ index: {{$index}} , depth:{{$depth}}    ] 
+                                             </div>
+                                        </li>
+
+                                  </ul>
+
+
+                </div>
+
+        </div>
+</section>

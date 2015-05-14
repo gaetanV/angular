@@ -26,7 +26,7 @@
  *  @target dom 
  *  @syntax ng-drop {attribut}  
  *          - optional : namespace {string} 
- *          - optional : contraint {function}  contraint for callback
+ *          - optional : constraint {function}  constraint for callback
  *                -Require: return (true|false)
  *                -Scope :Inject
  *                      $drag {scope}
@@ -36,7 +36,7 @@
  *                      $drag {scope}
  *                      $transport {entity}
  *                -Scope :Apply
- *  @exemple : [  ng-drop = "namespace:'groupe1' ,  callback:'add( $transport , list  )' , contraint:'notChild($drag.item , list)' " , ng-drop = ""]
+ *  @exemple : [  ng-drop = "namespace:'groupe1' ,  callback:'add( $transport , list  )' , constraint:'notChild($drag.item , list)' " , ng-drop = ""]
  *
  */
 (function () {
@@ -91,7 +91,7 @@
                     if (callback)
                         callback(result);
                 }
-                scopeDrop.$apply($fn);
+                  if(scopeDrop.$root.$$phase=='$apply')  $fn(); else  scopeDrop.$apply($fn);
             }
             ;
 
@@ -119,6 +119,7 @@
              *  - Eval drop callback | Build a Clone 
              */
             var dropTo = function (target) {
+           
                 optionDrop = parseDomJson(target.getAttribute("ng-drop"));
 
 
@@ -153,18 +154,20 @@
     /**
      *  @param   e {event dom}
      *  @param  namesapce {string}
-     *  @param   contraint {function}
+     *  @param   constraint {function}
      *  @param   callback {function}
      */
-    var drag = function (e, namespace, contraint, callback) {
+    var drag = function (e, namespace, constraint, callback) {
 
         var vm = this;
         var dom = e.currentTarget;
+        this.dom=dom;
+        angular.element(this.dom).addClass("ng-drag");
         vm._xClick = -(dom.offsetLeft - e.pageX);
         vm._yClick = -(dom.offsetTop - e.pageY);
         vm.haveMove = false;
         vm.valid = false;
-        vm.isValid = contraint;
+        vm.isValid = constraint;
         vm.dropTo = callback;
         vm.overDrop;
         /**
@@ -218,6 +221,7 @@
         document.removeEventListener('mousedown', this);
         document.removeEventListener('mouseup', this);
         document.removeEventListener('mousemove', this);
+         angular.element(this.dom).removeClass("ng-drag");
         clearInterval(this.checkTimer)
         if (this.valid) {    this.dropTo(this.ngdropList[this.overDrop]);  };
          this.removeDropList();
@@ -257,6 +261,9 @@
                     /**
                     * @On  different drop container
                    */
+                   angular.element(drop[vm.overDrop]).removeClass("ng-drop-error");
+                   angular.element(drop[vm.overDrop]).removeClass("ng-drop-active");
+                   
                     this.isValid(drop[i], function (flag) {
                         if (flag) {
                             angular.element(drop[i]).addClass("ng-drop-active");

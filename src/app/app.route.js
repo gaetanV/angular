@@ -13,6 +13,8 @@
                 templateUrl : './app/index.html',
             }).when('/childrenrepeat', {
                 templateUrl : './app/childrenrepeat/childrenrepeat.html',
+            }).when('/childrenDrop', {
+               templateUrl : './app/childrenrepeat/childrenDrop.html',
             }).when('/ngdrag', {
                templateUrl : './app/ngdrag/ngdrag.html',
             }).when('/ngdragclone', {

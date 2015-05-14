@@ -106,3 +106,35 @@ li{
 .list-child li{
     border-bottom: 0;
 }
+
+
+.childDrop .ng-drop-active::after {
+    display: block;
+    margin:10px 0;
+    margin-left: 20px;
+    background:#f8f8f8;
+  
+ 
+    content: "+";
+    text-align: center;
+  
+        
+}
+.childDrop .ng-drag{
+    color:#ddd;
+}
+.childDrop .ng-drag + *{
+    color:#ddd;
+}
+.childDrop .ng-drop-error{
+    background:none;
+}
+
+.childDrop .ng-drop{
+   background:none;
+    border:none;
+}
+.childDrop .ng-drop-active{
+    background:none;
+    border:none;
+}
