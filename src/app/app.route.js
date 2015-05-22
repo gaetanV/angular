@@ -35,6 +35,8 @@
                templateUrl : './app/date/datePicker.html',
             }).when('/initValue', {
                templateUrl : './app/form/initValue.html',
+            }).when('/childrenOption', {
+               templateUrl : './app/childrenrepeat/childrenOption.html',
             })
             ;
     };

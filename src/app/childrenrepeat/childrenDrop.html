@@ -9,7 +9,7 @@
                         <ul class="list-child" children-repeat="item in list track by children">
                                        <li >
                                              <div  ng-drag= "   transport : 'item'   " ng-drop=" constraint: 'isNotChild(item,$transport)' , callback : 'pushChildren( $transport , item , $drag )'   "   >
-                                                   {{item.name}}  [ index: {{$index}} , depth:{{$depth}}    ] 
+                                                   {{item.title}}  
                                              </div>
                                         </li>
 
