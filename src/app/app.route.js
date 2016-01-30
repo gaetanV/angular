@@ -37,6 +37,8 @@
                templateUrl : './app/form/initValue.html',
             }).when('/childrenOption', {
                templateUrl : './app/childrenrepeat/childrenOption.html',
+            }).when('/gitRepro', {
+               templateUrl : './app/gitrepro/gitrepro.html',
             })
             ;
     };

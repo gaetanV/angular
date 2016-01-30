@@ -93,7 +93,7 @@
             
             
             var uploadFile = function (file) {
-                
+               
                 if(option.maxsize){
                     if(file.size>option.maxsize){
                         $scope.$apply(function(){
@@ -170,8 +170,11 @@
                 e.preventDefault();
             };
             var handleDrop = function (e) {
+      
+     
+ 
                 block(e);
-                processFiles(e.dataTransfer.files);
+                       if(e.dataTransfer.files)   processFiles(e.dataTransfer.files);
             };
             var handleChange = function (e) {
                 processFiles(e.currentTarget.files);

@@ -6,9 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
     <title data-ng-bind="title"></title>
     <link href="./content/styles.css" rel="stylesheet" />
+       <link href="./content/prism.css" rel="stylesheet" />
+
     <script src= "./content/angular.js"></script>
     <script src= "./content/angular-route.js"></script>
-    
+    <script src= "./content/prism.js"></script>
      <script src="./app/app.module.js"></script>
      <script src="./app/app.route.js"></script>
    
@@ -35,7 +37,8 @@
              <link href="./directive/datePicker.directive.css" rel="stylesheet" />
              <!-- initValue -->
               <script src="./directive/initValue.directive.js"></script>
-             
+             <!-- gitRepro -->
+              <script src="./directive/gitRepro.directive.js"></script>
              
 </head>
 <body>
@@ -55,6 +58,8 @@
                            <li><a href="#finder"> finder </a></li>
                             <li><a href="#datePicker"> datePicker </a></li>
                               <li><a href="#initValue"> initValue </a></li>
+                              
+                                <li><a href="#gitRepro"> gitRepro </a></li>
                  </ul>
             
              <div id="warpper" ng-view></div>       
@@ -91,5 +96,9 @@
        <script src="./app/form/form.module.js"></script>
        <script src="./app/form/initvalue.js"></script>
        
+          <!-- Exemple gitrepro -->
+       <script src="./app/gitrepro/gitrepro.module.js"></script>
+       <script src="./app/gitrepro/gitrepro.js"></script>
+ 
 </body>
 </html>

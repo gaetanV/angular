@@ -6992,7 +6992,7 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
         // we must always refer to nodeList[i] since the nodes can be replaced underneath us.
         directives = collectDirectives(nodeList[i], [], attrs, i === 0 ? maxPriority : undefined,
                                         ignoreDirective);
-
+                                       
         nodeLinkFn = (directives.length)
             ? applyDirectivesToNode(directives, nodeList[i], attrs, transcludeFn, $rootElement,
                                       null, [], [], previousCompileContext)
