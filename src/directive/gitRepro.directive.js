@@ -5,8 +5,8 @@
             .module('app')
             .directive('gitRepro', GitRepro);
 
-    GitRepro.$inject = ["$compile","$http","$rootScope","$route"];
-    function GitRepro($compile,$http,$rootScope,$route) {
+    GitRepro.$inject = ["$compile","$http"];
+    function GitRepro($compile,$http) {
           return {
             transclude: true,
             compile: compile,

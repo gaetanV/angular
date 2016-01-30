@@ -38,7 +38,9 @@
             }).when('/childrenOption', {
                templateUrl : './app/childrenrepeat/childrenOption.html',
             }).when('/gitRepro', {
-               templateUrl : './app/gitrepro/gitrepro.html',
+               templateUrl : './app/getcode/gitrepro.html',
+            }).when('/code', {
+               templateUrl : './app/getcode/code.html',
             })
             ;
     };
