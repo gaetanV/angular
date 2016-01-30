@@ -41,6 +41,8 @@
                templateUrl : './app/getcode/gitrepro.html',
             }).when('/code', {
                templateUrl : './app/getcode/code.html',
+            }).when('/ckeditor', {
+               templateUrl : './app/form/ckeditor.html',
             })
             ;
     };

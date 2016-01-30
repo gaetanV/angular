@@ -7,7 +7,7 @@
     <title data-ng-bind="title"></title>
     <link href="./content/styles.css" rel="stylesheet" />
        <link href="./content/prism.css" rel="stylesheet" />
-
+    <script src= "./content/ckeditor/ckeditor.js"></script>
     <script src= "./content/angular.js"></script>
     <script src= "./content/angular-route.js"></script>
     <script src= "./content/prism.js"></script>
@@ -17,6 +17,8 @@
             <!-- ngdrag directive -->
             <script src="./directive/ngdrag.directive.js"></script>
              <link href="./directive/ngdrag.directive.css" rel="stylesheet" />
+             <!-- ckeditor directive -->
+           <script src="./directive/ckeditor.directive.js"></script>
             <!-- children-repeat directive -->
            <script src="./directive/childrenRepeat.directive.js"></script>
             <!-- children-option directive -->
@@ -61,6 +63,7 @@
                               <li><a href="#initValue"> initValue </a></li>
                                <li><a href="#code"> code </a></li>
                                 <li><a href="#gitRepro"> gitRepro </a></li>
+                                 <li><a href="#ckeditor"> ckeditor </a></li>
                  </ul>
             
              <div id="warpper" ng-view></div>       
