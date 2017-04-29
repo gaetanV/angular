@@ -1,0 +1,29 @@
+.datePicker ul li{
+    float:left;
+    display:block;
+    width:14.28%;
+    height:25px; 
+    line-height:25px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.datePicker ul {
+    clear:both;
+}
+
+.datePicker .dp_labelMonth{
+    text-align: center;
+}
+
+.datePicker .dp_labelDays li{
+    height:50px; 
+    line-height:50px;
+}
+.datePicker .typeDay_1:hover{
+    background: #f5f5f5;
+}
+
+.datePicker  .typeDay_0 , .datePicker  .typeDay_2  {
+    background: #eee;
+}

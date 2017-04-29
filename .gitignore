@@ -1,1 +1,8 @@
-src/directive/v
+/angular1/directive/v
+
+/angular4/node_modules/
+/angular4/directive/
+/angular4/demo/module/**/*.js
+/angular4/demo/src/**/*.js
+/angular4/demo/node_modules/
+/angular4/demo/dist/
