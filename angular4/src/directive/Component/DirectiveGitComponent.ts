@@ -3,7 +3,18 @@ import {Component} from '@angular/core';
     selector: 'directive-Git',
     template: `
         <h1>Directive Git</h1>
-        <git user="gaetanV" repositories="angular" branch="master" path="angular1/directive/gitRepro.directive.js" ></git>
+        <div (click)="setPattern('angular4/directive/DirectiveCode.ts')">DirectiveCode</div>
+        <div (click)="setPattern('angular4/directive/DirectiveGit.ts')">DirectiveGit</div>
+        <div>
+             <git user="gaetanV" repositories="angular" branch="master" path="{{pattern}}" ></git>
+        </div> 
     `
 })
-export class DirectiveGitComponent {}
+export class DirectiveGitComponent {
+    pattern: string = "angular4/directive/DirectiveGit.ts";
+
+    setPattern(pattern: string) {
+        this.pattern = pattern;
+    }
+
+}

@@ -3,7 +3,7 @@ import {Component} from '@angular/core';
     selector: 'my-demo',
     template: `
         <h1>Angular directives collection</h1>
-        <a routerLink="/Directive1">Directive1</a>
+        <a routerLink="/DirectiveCode">DirectiveCode</a>
         <a routerLink="/DirectiveGit">DirectiveGit</a>
         <router-outlet></router-outlet>
     `
@@ -11,16 +11,18 @@ import {Component} from '@angular/core';
 class BootComponent {}
 import {NgModule} from '@angular/core';
 import {Routes,RouterModule} from '@angular/router';
-import {Directive1Component} from './../src/directive/Component/Directive1Component';
+import {DirectiveCodeComponent} from './../src/directive/Component/DirectiveCodeComponent';
 import {DirectiveGitComponent} from './../src/directive/Component/DirectiveGitComponent';
 const appRoutes: Routes = [
-    {path: 'Directive1', component: Directive1Component},
+    {path: 'DirectiveCode', component: DirectiveCodeComponent},
     {path: 'DirectiveGit', component: DirectiveGitComponent},
 ];
 import {APP_BASE_HREF} from '@angular/common';
 import {BrowserModule} from '@angular/platform-browser';
-import { HttpModule } from '@angular/http';
-import {DirectiveGit} from '../../directive/DirectiveGit';
+import {HttpModule} from '@angular/http';
+import {DirectiveGit} from './../directive/DirectiveGit';
+import {DirectiveCode} from './../directive/DirectiveCode';
+
 @NgModule({
     imports: [
         BrowserModule,
@@ -33,7 +35,13 @@ import {DirectiveGit} from '../../directive/DirectiveGit';
             useValue: '/',
         }
     ],
-    declarations: [BootComponent, Directive1Component, DirectiveGitComponent ,DirectiveGit],
+    declarations: [
+        BootComponent, 
+        DirectiveCodeComponent, 
+        DirectiveGitComponent ,
+        DirectiveGit,
+        DirectiveCode
+    ],
     bootstrap: [BootComponent]
 })
 class AppModule {}
