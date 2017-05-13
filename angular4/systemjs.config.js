@@ -3,9 +3,10 @@ System.config({
         'npm:': 'node_modules/'
     },
     map: {
+        'interface': 'interface/',
         'service': 'service/',
         'directive': 'directive/',  
-        'demo': 'src/directive/',
+        'demo': 'src/',
         '@angular/core': 'npm:@angular/core/bundles/core.umd.js',
         '@angular/common': 'npm:@angular/common/bundles/common.umd.js',
         '@angular/compiler': 'npm:@angular/compiler/bundles/compiler.umd.js',
@@ -16,6 +17,9 @@ System.config({
         'rxjs': 'npm:rxjs',
     },
     packages: {
+        interface :{
+            defaultExtension: 'js'
+        },
         service :{
             defaultExtension: 'js'
         },

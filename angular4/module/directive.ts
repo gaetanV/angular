@@ -5,6 +5,7 @@ import {Component} from '@angular/core';
         <h1>Angular directives collection</h1>
         <a routerLink="/DirectiveCode">DirectiveCode</a>
         <a routerLink="/DirectiveGit">DirectiveGit</a>
+        <a routerLink="/DirectiveObservable">DirectiveObservable</a>
         <router-outlet></router-outlet>
     `
 })
@@ -13,15 +14,19 @@ import {NgModule} from '@angular/core';
 import {Routes,RouterModule} from '@angular/router';
 import {DirectiveCodeComponent} from './../src/directive/Component/DirectiveCodeComponent';
 import {DirectiveGitComponent} from './../src/directive/Component/DirectiveGitComponent';
+import {DirectiveObservableComponent,DirectiveObservableComponentTest} from './../src/directive/Component/DirectiveObservableComponent';
+
 const appRoutes: Routes = [
     {path: 'DirectiveCode', component: DirectiveCodeComponent},
     {path: 'DirectiveGit', component: DirectiveGitComponent},
+    {path: 'DirectiveObservable', component: DirectiveObservableComponent},
 ];
 import {APP_BASE_HREF} from '@angular/common';
 import {BrowserModule} from '@angular/platform-browser';
 import {HttpModule} from '@angular/http';
 import {DirectiveGit} from './../directive/DirectiveGit';
 import {DirectiveCode} from './../directive/DirectiveCode';
+
 
 @NgModule({
     imports: [
@@ -37,6 +42,7 @@ import {DirectiveCode} from './../directive/DirectiveCode';
     ],
     declarations: [
         BootComponent, 
+        DirectiveObservableComponent,DirectiveObservableComponentTest,
         DirectiveCodeComponent, 
         DirectiveGitComponent ,
         DirectiveGit,

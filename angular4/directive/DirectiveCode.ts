@@ -5,6 +5,7 @@ import {Http} from '@angular/http';
     selector: 'code',
     template: `<pre>{{code}}</pre>`,
 })
+
 export class DirectiveCode {
     code : string = "Set your src";
     

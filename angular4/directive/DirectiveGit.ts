@@ -1,6 +1,6 @@
-import {Component, Input, Inject} from '@angular/core';
-import {Http} from '@angular/http';
+import {Component, Input, Inject } from '@angular/core';
 import {ServiceGit} from '../service/ServiceGit';
+
 
 @Component({
     selector: 'git',
@@ -9,6 +9,7 @@ import {ServiceGit} from '../service/ServiceGit';
 })
 
 export class DirectiveGit {
+
     @Input() user: string;
     @Input() repositories: string;
     @Input() branch: string;
@@ -16,9 +17,12 @@ export class DirectiveGit {
     code: string = "";
 
     constructor(
-        @Inject(ServiceGit) private git: ServiceGit
+        @Inject(ServiceGit) private git: ServiceGit,
     ) {}
-
+    
+    ngStreamGit(){
+        console.log("super");
+    }
     ngOnInit() {
         if (!this.user) throw new Error("user is required");
         if (!this.repositories) throw new Error("repositories is required");
@@ -26,7 +30,7 @@ export class DirectiveGit {
         if (!this.path) throw new Error("path: is required");
         this.serviceGit();
     }
-
+    
     ngOnChanges() {
         this.serviceGit();
     }
