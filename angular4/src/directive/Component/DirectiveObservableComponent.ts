@@ -1,43 +1,36 @@
-import {Component,Inject } from '@angular/core';
-import {InterfaceStream} from '../../../interface/InterfaceStream';
+import {Component, Inject} from '@angular/core';
+import {Stream, Observe} from '../../../directive/DirectiveStream';
 
 @Component({
     selector: 'directive-Observable-Test',
     template: `
-        <div>{{message}}</div>
-    `,
-    providers: [InterfaceStream]
+       <section> 
+        -- Test --
+         <div>{{message}}</div>
+         <div>{{test}}</div>
+       </section>
+    `
 })
-export class DirectiveObservableComponentTest {
-    message: string = "wait your click";
-    instance: number ;
-    constructor(
-        @Inject(InterfaceStream) private interfaceStream: InterfaceStream,
-    ) {
-         this.message = this.interfaceStream.subscribe(this);
-    }
-
-    ngStream(message) {
-        this.message = message;
-    }
-
-}
+@Observe({
+    stream: "observable-event",
+    cible: ['message', 'test']
+})
+export class DirectiveObservableComponentTest {}
 
 @Component({
     selector: 'directive-Observable',
     template: `
         <directive-Observable-Test></directive-Observable-Test>
         <directive-Observable-Test></directive-Observable-Test>
-        <div (click)="stream('observer')">Click</div>
-    `,
-    providers: [InterfaceStream]
+        <div (click)="upstep('observer ')">Click</div>
+    `
+})
+@Stream({
+    stream: "observable-event",
+    cible: 'ngStream'
 })
 export class DirectiveObservableComponent {
-
-    constructor(
-        @Inject(InterfaceStream) private interfaceStream: InterfaceStream,
-    ) {}
-    stream(message: string) {
-        this.interfaceStream.stream("superbe" + Math.random());
+    upstep(message: string) {
+        this.ngStream(message + Math.random()); // Warning math random is interpret for all client
     }
 }
