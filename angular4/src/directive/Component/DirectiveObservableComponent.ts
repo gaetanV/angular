@@ -1,4 +1,4 @@
-import {Component,ViewChild, Inject,ElementRef,ViewContainerRef } from '@angular/core';
+import {Component,Inject } from '@angular/core';
 import {InterfaceStream} from '../../../interface/InterfaceStream';
 
 @Component({
@@ -14,14 +14,11 @@ export class DirectiveObservableComponentTest {
     constructor(
         @Inject(InterfaceStream) private interfaceStream: InterfaceStream,
     ) {
-        this.instance = this.interfaceStream.subscribe(this);
+         this.message = this.interfaceStream.subscribe(this);
     }
 
     ngStream(message) {
         this.message = message;
-    }
-    ngOnDestroy() {
-         this.interfaceStream.unsubscribe(this.instance);
     }
 
 }
@@ -41,6 +38,6 @@ export class DirectiveObservableComponent {
         @Inject(InterfaceStream) private interfaceStream: InterfaceStream,
     ) {}
     stream(message: string) {
-        this.interfaceStream.stream("superbe");
+        this.interfaceStream.stream("superbe" + Math.random());
     }
 }

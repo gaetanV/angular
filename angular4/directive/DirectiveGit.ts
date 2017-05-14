@@ -17,12 +17,10 @@ export class DirectiveGit {
     code: string = "";
 
     constructor(
-        @Inject(ServiceGit) private git: ServiceGit,
+        @Inject(ServiceGit) private git: ServiceGit
     ) {}
     
-    ngStreamGit(){
-        console.log("super");
-    }
+
     ngOnInit() {
         if (!this.user) throw new Error("user is required");
         if (!this.repositories) throw new Error("repositories is required");
