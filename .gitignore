@@ -4,7 +4,7 @@
 /angular4/test/
 /angular4/module/**/*.js
 /angular4/directive/**/*.js
-/angular4/interface/**/*.js
+/angular4/pipe/**/*.js
 /angular4/service/**/*.js
 /angular4/src/**/*.js
 /angular4/node_modules/
