@@ -35,8 +35,9 @@ export class DirectiveObservableComponentTest2 {}
     selector: 'directive-Observable',
     template: `
         <div>Browser</div>
+        <span stream="observable-event" ></span>
         <input #input  [(ngModel)]="name" >
-        <div (click)="upstep('observer ')">Chat</div>
+        <div (click)="upstep('observer ')">Chat</div> 
         <directive-Observable-Test2></directive-Observable-Test2>
         <directive-Observable-Test></directive-Observable-Test>
     `

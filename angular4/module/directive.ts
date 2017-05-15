@@ -17,10 +17,13 @@ import {Component} from '@angular/core';
 class BootComponent {}
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
+
+
 import {DirectiveCodeComponent} from './../src/directive/Component/DirectiveCodeComponent';
 import {DirectiveGitComponent} from './../src/directive/Component/DirectiveGitComponent';
 import {DirectiveObservableComponent, DirectiveObservableComponentTest, DirectiveObservableComponentTest2} from './../src/directive/Component/DirectiveObservableComponent';
 import {PipeSplitComponent} from './../src/pipe/Component/PipeSplitComponent';
+import {DirectiveStream} from './../directive/DirectiveStream';
 
 const appRoutes: Routes = [
     {path: 'DirectiveCode', component: DirectiveCodeComponent},
@@ -35,6 +38,7 @@ import {DirectiveGit} from './../directive/DirectiveGit';
 import {DirectiveCode} from './../directive/DirectiveCode';
 import {PipeSplit} from './../pipe/PipeSplit';
 import {FormsModule} from '@angular/forms';
+
 
 @NgModule({
     imports: [
@@ -56,6 +60,7 @@ import {FormsModule} from '@angular/forms';
         PipeSplitComponent,
         DirectiveCodeComponent,
         DirectiveGitComponent,
+        DirectiveStream,
         DirectiveGit,
         DirectiveCode
     ],
