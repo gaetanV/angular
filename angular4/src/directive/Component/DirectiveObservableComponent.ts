@@ -30,14 +30,14 @@ export class DirectiveObservableComponentTest {}
 export class DirectiveObservableComponentTest2 {}
 
 
-
 @Component({
     selector: 'directive-Observable',
     template: `
         <div>Browser</div>
-        <span stream="observable-event" ></span>
+        <span observe="observable-event"  model="test"  ></span>
         <input #input  [(ngModel)]="name" >
-        <div (click)="upstep('observer ')">Chat</div> 
+        <div (click)="upstep()">Chat</div> 
+        <<<< {{test}} >>>>>
         <directive-Observable-Test2></directive-Observable-Test2>
         <directive-Observable-Test></directive-Observable-Test>
     `
@@ -48,11 +48,13 @@ export class DirectiveObservableComponentTest2 {}
 })
 export class DirectiveObservableComponent {
     @ViewChild('input', { read: ViewContainerRef }) public input: ViewContainerRef;
-
+    test:string = '';
     name: string = '';
-    upstep(message: string) {
+    upstep() {
         this.name = this.input.element.nativeElement.value;
         this.ngStream(this.name); 
         // Warning  (Math.random()) is interpret for all client 
     }
+
+
 }

@@ -1,14 +1,24 @@
-import { Directive, ElementRef ,Inject,Input} from '@angular/core';
-@Directive({ selector: '[stream]' })
+import {Directive, ElementRef, Inject, Input, Output, EventEmitter, ViewContainerRef} from '@angular/core';
+@Directive({selector: '[observe]'})
 
 export class DirectiveStream {
-    @Input() stream: string;
-    constructor(  @Inject(ElementRef) private el: ElementRef ) {}
-    ngOnInit() {document.addEventListener(this.stream, this.update.bind(this)), false);}
-    update(message){this.el.nativeElement.innerHTML  = message.detail.message;}
+    @Input() observe: string;
+    @Input() model: string;
+    
+    constructor( 
+        @Inject(ElementRef) private el: ElementRef, 
+        @Inject(ViewContainerRef) private c: ViewContainerRef
+    ) {}
+    ngOnInit() {document.addEventListener(this.observe, this.update.bind(this)), false)}
+    update(message) {
+        if(this.model){
+            this.c._view.component[this.model]= message.detail.message;
+        }
+        this.el.nativeElement.innerHTML = message.detail.message;
+    }
 }
 
-        
+
 export function Stream(a) {
     if (!a.cible) {throw Error("need a cible")};
     if (!a.stream) {throw Error("need a stream")};
