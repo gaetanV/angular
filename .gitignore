@@ -1,5 +1,6 @@
 /angular1/directive/v
-
+/angular1/node_modules/
+/angular1/app/childrenrepeat/*.js
 /angular4/node_modules/
 /angular4/test/
 /angular4/module/**/*.js

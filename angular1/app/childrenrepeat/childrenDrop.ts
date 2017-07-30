@@ -1,12 +1,29 @@
 (function () {
     'use strict';
     angular
-            .module('app.childrenRepeat')
-            .controller('ChildrenDrop', ChildrenDrop);
+           .module('app.childrenRepeat')
+           .component('pageChildrendrop', {
+            template:
+            `<section>
+            <h1>Children-repeat + Ng-drop directive</h1>
+            <div class="controller childDrop" >
+                <div class="scope"> {{list}}</div>
+                <div  ng-hide="loading">  
+                    <div  ng-drop="callback:  'push( $transport , list , $drag )' , constraint: 'isNotFirstDepth($drag)' ">Root</div>
+                    <ul class="list-child" children-repeat="item in list track by children">
+                        <li >
+                            <div  ng-drag= "   transport : 'item'   " ng-drop=" constraint: 'isNotChild(item,$transport)' , callback : 'pushChildren( $transport , item , $drag )'   "   >
+                                {{item.title}}  
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>`
+        ,
+    controller: ["$scope",ChildrenDropController]});
 
-    ChildrenDrop.$inject = ['$scope'];
-    
-    function ChildrenDrop($scope) {
+    function ChildrenDropController($scope) {
         $scope.list = [
             {
                 title: "Sample No children 1",
@@ -68,4 +85,5 @@
             $item.children.unshift($transport);
         };
     }
+
 })();

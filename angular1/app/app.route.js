@@ -5,27 +5,31 @@
             .module('app')
             .config(route);
 
-    route.$inject = ['$routeProvider'];
+    route.$inject = ['$routeProvider','$locationProvider'];
 
-    function route($routeProvider) {
+    function route($routeProvider,$locationProvider) {
+        
+        $locationProvider.hashPrefix('');
         $routeProvider
-                .when('/', {
-                    templateUrl: './app/index.html',
-                }).when('/childrenrepeat', {
-            templateUrl: './app/childrenrepeat/childrenrepeat.html',
+        .when('/', {
+            templateUrl: './app/index.html',
+        }).when('/childrenrepeat', {
+            template: '<page-childrenrepeat></page-childrenrepeat>'
         }).when('/childrenDrop', {
-            templateUrl: './app/childrenrepeat/childrenDrop.html',
+            template: '<page-childrendrop></page-childrendrop>'
+        }).when('/childrenOption', {
+            template: '<page-childrenoption></page-childrenoption>'
         }).when('/ngdrag', {
             templateUrl: './app/ngdrag/ngdrag.html',
         }).when('/ngdragclone', {
             templateUrl: './app/ngdrag/ngclone.html',
         })
-                .when('/quickedit', {
-                    templateUrl: './app/quickedit/quickedit.html',
-                })
-                .when('/matchfield', {
-                    templateUrl: './app/matchfield/matchfield.html',
-                }).when('/multipattern', {
+        .when('/quickedit', {
+            templateUrl: './app/quickedit/quickedit.html',
+        })
+        .when('/matchfield', {
+            templateUrl: './app/matchfield/matchfield.html',
+        }).when('/multipattern', {
             templateUrl: './app/matchfield/multipattern.html',
         }).when('/dropfiles', {
             templateUrl: './app/dropfiles/dropfiles.html',
@@ -35,8 +39,6 @@
             templateUrl: './app/date/datePicker.html',
         }).when('/initValue', {
             templateUrl: './app/form/initValue.html',
-        }).when('/childrenOption', {
-            templateUrl: './app/childrenrepeat/childrenOption.html',
         }).when('/gitRepro', {
             templateUrl: './app/getcode/gitrepro.html',
         }).when('/code', {
