@@ -1,4 +1,1 @@
-(function () {
-    'use strict';
-    angular.module('app.childrenRepeat', []);
-})();
+angular.module('app.childrenRepeat', []);
