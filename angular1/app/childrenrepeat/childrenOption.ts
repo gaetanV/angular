@@ -21,7 +21,7 @@
     controller: [ChildrenOptionController]});
 
     function ChildrenOptionController() {
-        this.result = ["1", "2"];        this.result = ["1", "2"];
+        this.result = ["1", "2"];       
 
         this.sample = [
             {
