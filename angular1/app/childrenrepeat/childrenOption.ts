@@ -1,4 +1,3 @@
-
 angular
     .module('app.childrenRepeat')
     .component('pageChildrenoption', {
@@ -14,7 +13,7 @@ angular
             {{ $ctrl.result2}}
             <select children-option="id as title in $ctrl.sample track by children" required ng-model=" $ctrl.result2" ></select>
         </div>
-    </section>`
+        </section>`
         ,
         controller: [ChildrenOptionController]
     });

@@ -19,6 +19,8 @@
             template: '<page-childrendrop></page-childrendrop>'
         }).when('/childrenOption', {
             template: '<page-childrenoption></page-childrenoption>'
+        }).when('/datePicker', {
+            template: '<page-datepicker></page-datepicker>',
         }).when('/ngdrag', {
             templateUrl: './app/ngdrag/ngdrag.html',
         }).when('/ngdragclone', {
@@ -35,8 +37,6 @@
             templateUrl: './app/dropfiles/dropfiles.html',
         }).when('/finder', {
             templateUrl: './app/finder/finder.html',
-        }).when('/datePicker', {
-            templateUrl: './app/date/datePicker.html',
         }).when('/initValue', {
             templateUrl: './app/form/initValue.html',
         }).when('/gitRepro', {

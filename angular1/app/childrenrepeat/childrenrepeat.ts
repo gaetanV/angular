@@ -1,6 +1,4 @@
-(function () {
-    'use strict';
-    angular
+   angular
             .module('app.childrenRepeat')
             .component('pageChildrenrepeat', {
             template:
@@ -67,5 +65,3 @@
 
         };
     }
-
-})();

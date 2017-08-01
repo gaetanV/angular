@@ -3,6 +3,7 @@
 /angular1/app/childrenrepeat/*.js
 /angular1/package-lock.json
 /angular1/app/boot.js
+/angular1/app/directive.js
 /angular4/node_modules/
 /angular4/test/
 /angular4/module/**/*.js
