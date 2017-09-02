@@ -14,37 +14,35 @@
         .when('/', {
             templateUrl: './app/index.html',
         }).when('/childrenrepeat', {
-            template: '<page-childrenrepeat></page-childrenrepeat>'
+            template: '<page-childrenrepeat/>'
         }).when('/childrenDrop', {
-            template: '<page-childrendrop></page-childrendrop>'
+            template: '<page-childrendrop/>'
         }).when('/childrenOption', {
-            template: '<page-childrenoption></page-childrenoption>'
+            template: '<page-childrenoption/>'
         }).when('/datePicker', {
-            template: '<page-datepicker></page-datepicker>',
+            template: '<page-datepicker/>',
         }).when('/ngdrag', {
-            templateUrl: './app/ngdrag/ngdrag.html',
+            template: '<ng-drag/>',
         }).when('/ngdragclone', {
-            templateUrl: './app/ngdrag/ngclone.html',
-        })
-        .when('/quickedit', {
-            templateUrl: './app/quickedit/quickedit.html',
-        })
-        .when('/matchfield', {
-            templateUrl: './app/matchfield/matchfield.html',
+            template: '<ng-clone/>',
+        }).when('/quickedit', {
+            template: '<quickedit/>',
+        }).when('/matchfield', {
+            template: '<matchfield/>',
         }).when('/multipattern', {
-            templateUrl: './app/matchfield/multipattern.html',
+            template: '<multipattern/>',
         }).when('/dropfiles', {
             templateUrl: './app/dropfiles/dropfiles.html',
         }).when('/finder', {
-            templateUrl: './app/finder/finder.html',
+            template: '<finder></finder>',
         }).when('/initValue', {
-            templateUrl: './app/form/initValue.html',
+            template: '<init-value/>',
         }).when('/gitRepro', {
-            templateUrl: './app/getcode/gitrepro.html',
+            template: '<get-git/>',
         }).when('/code', {
-            templateUrl: './app/getcode/code.html',
+            template: '<get-code/>',
         }).when('/ckeditor', {
-            templateUrl: './app/form/ckeditor.html',
+            template: '<ckeditor/>',
         });
     }
 })();

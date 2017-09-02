@@ -1,6 +1,7 @@
 /angular1/directive/v
 /angular1/node_modules/
 /angular1/app/childrenrepeat/*.js
+
 /angular1/package-lock.json
 /angular1/app/boot.js
 /angular1/app/directive.js
