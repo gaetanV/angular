@@ -32,7 +32,13 @@ gulp.task('directive', function () {
        .pipe(gulp.dest('app/'));
 });
 
-gulp.task('watch', ['ts','directive'], function () {
+gulp.task('css', function () {
+    return gulp.src(['directive/**/*.css'])
+       .pipe(concat('directive.css'))
+       .pipe(gulp.dest('content/'));
+});
+
+gulp.task('watch', ['ts','directive','css'], function () {
     gulp.watch('app/**/*.ts', ['ts']);
     gulp.watch('directive/*.js', ['directive']);
 });
