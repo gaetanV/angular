@@ -32,7 +32,7 @@
         }).when('/multipattern', {
             template: '<multipattern/>',
         }).when('/dropfiles', {
-            templateUrl: './app/dropfiles/dropfiles.html',
+            template: '<drop-files/>',
         }).when('/finder', {
             template: '<finder></finder>',
         }).when('/initValue', {
