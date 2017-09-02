@@ -1,8 +1,8 @@
 
-function NgDragController($scope) {
+function NgDragController($scope,ItemFactory) {
 
-    $scope.pItem1 = [new cap(), new shirt(), new shirt()];
-    $scope.pItem2 = [new cap(), new cap(), new shoe()];
+    $scope.pItem1 = [new ItemFactory.cap(), new ItemFactory.shirt(), new ItemFactory.shirt()];
+    $scope.pItem2 = [new ItemFactory.cap(), new ItemFactory.cap(), new ItemFactory.shoe()];
 
     $scope.remove = function (list, $index) {
         console.log("remove");
@@ -43,5 +43,5 @@ angular.module('app.ngDrag').component('ngClone',{
         <div class="reception"  ng-drop  > Clone Out of controller</div>
     </section>
   `,
-  controller: ['$scope',NgDragController]
+  controller: ['$scope','ItemFactory',NgDragController]
 });

@@ -15,7 +15,7 @@
         'app.getcode',
         'app.date',
         'app.dropfiles',  
-    
+        'app.factory'
     ]);
 
 

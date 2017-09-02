@@ -16,6 +16,7 @@ gulp.task('ts', function () {
         'app/component/matchfield/field.module.ts', 
         'app/component/ngdrag/ngdrag.module.ts', 
         'app/component/dropfiles/dropfiles.module.ts', 
+        'app/factory/factory.module.ts', 
         'app/**/*.ts'
     ])
            .pipe(ts({
@@ -31,6 +32,8 @@ gulp.task('directive', function () {
        .pipe(uglify())
        .pipe(gulp.dest('app/'));
 });
+
+
 
 gulp.task('css', function () {
     return gulp.src(['directive/**/*.css'])

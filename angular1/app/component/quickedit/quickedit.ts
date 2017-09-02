@@ -1,4 +1,4 @@
-function QuickEditController($scope) {
+function QuickEditController($scope,ItemFactory) {
   
     $scope.clone = function (tscope) {
         tscope.form = angular.copy(tscope.item);
@@ -13,7 +13,7 @@ function QuickEditController($scope) {
         };
     }; 
  
-    $scope.pItem1 = [new cap(), new shirt(), new shirt()];
+    $scope.pItem1 = [new ItemFactory.cap(), new ItemFactory.shirt(), new ItemFactory.shirt()];
  
    
 }
@@ -47,5 +47,5 @@ angular.module('app.quickedit').component('quickedit',{
             </div>
         </section>
     `,
-    controller: ['$scope',QuickEditController]
+    controller: ['$scope','ItemFactory',QuickEditController]
 });
