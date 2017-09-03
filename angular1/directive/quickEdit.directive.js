@@ -1,49 +1,62 @@
-(function () {
-    'use strict';
+/*
+ * directive/quickEdit.directive.js
+ *
+ * (c) Gaetan Vigneron 
+ *  11/05/2015
+ */
 
-    angular
-            .module('app')
-            .directive('quickEdit', QuickEdit);
-
-    QuickEdit.$inject = ["$compile"];
-    function QuickEdit($compile) {
+angular.module('gaetan').directive('quickEdit', [function () {
+                
+    return {
+        restrict: 'A',
+        transclude: true,
+        compile: compile,
+    };
+    
+    //////////
+    
+    function compile($element, $attr, transclude) {
 
         return {
-            transclude: true,
-            compile: compile,
+            pre: link
         };
-
-        function compile($element, $attr, transclude) {
-
-            return {pre: link};
-            function link($scope, element) {
-                $scope.quickModel = $attr.quickEdit;
-                $scope.switchModel = function (id) {
-                    $scope.quickModel = id;
-                };
-                $scope.$watch("quickModel", function (model) {
-
-                    transclude($scope, function (clone) {
-                        for (var i = 0; i < clone.length; i++) {
-
-                            if (clone[i].toString() == "[object HTMLDivElement]")
-                                var attModel = clone[i].getAttribute("quick-model");
-
-                            if (attModel === model) {
-                                element.children().remove();
-                                var attAction = clone[i].getAttribute("quick-action");
-                                if (attAction) {
-                                    $scope[attAction]($scope);
-                                }
-                                element.append(clone[i]);
-                                break;
-                            }
-
-                        }
-
-                    });
-                });
+        
+        //////////
+        
+        function link($scope, $element) {
+            
+            var attAction;
+            var model;
+            
+            $scope.quickModel = $attr.quickEdit;
+            $scope.switchModel = switchModel;
+            $scope.$watch("quickModel", onModelChange);
+            
+            function switchModel(id) {
+                $scope.quickModel = id; 
             }
+                    
+            function onModelChange(m) {
+                model = m;
+                transclude($scope, transcludeHtml);
+            };
+            
+            function transcludeHtml(clone) {
+                for (var i = 0; i < clone.length; i++) {
+                    if (clone[i].toString() === "[object HTMLDivElement]"){
+                        if (clone[i].getAttribute("quick-model") === model) {
+                            $element.children().remove();
+                            attAction = clone[i].getAttribute("quick-action");
+                            if (attAction) {
+                                $scope[attAction]($scope);
+                            }
+                            $element.append(clone[i]);
+                            break;
+                        }
+                    }
+                }
+            };
         }
     }
-})();
+        
+}]);

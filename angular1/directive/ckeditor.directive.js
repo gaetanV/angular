@@ -1,72 +1,54 @@
 /*
  * directive/ckeditor.directive.js
- * This file is part of the angular directive package.
  *
- * (c) Gaetan Vigneron <gaetan@webworkshops.fr>
- *  V 0.2.0
+ * (c) Gaetan Vigneron 
  *  11/05/2015
  *  
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
+ * This directive require CKEDITOR library
  */
 
-/**
- * #CONSTRUCT
- * 
- *  @target dom {select}
- *  @syntax  ckeditor {attribut}  
- *  @exemple : [ ckeditor ]
- *
- *TO DO OPTION SELECT AND BUILD
- *
- */
+angular.module('gaetan').directive('ckeditor', [function () {
 
-(function () {
-    'use strict';
-    angular
-            .module('app')
-            .directive('ckeditor', ckeditor);
-    ckeditor.$inject = ['$compile'];
+    return {
+        restrict: 'A',
+        require: "ngModel",
+        link: link,
+    };
 
-    function ckeditor($compile) {
-        var link = function ($scope, $element, $attrs, $controller) {
+    //////////
 
-            if (CKEDITOR) {
-                var element = new CKEDITOR.dom.element($element[0]);
-                if (element.getEditor()) {
-                    var name = element.getEditor().name;
-                    var instance = CKEDITOR.instances[name];
-                    if (instance)
-                        CKEDITOR.destroy(instance);
-                }
-                var ck = CKEDITOR.replace($element[0])
+    function link($scope, $element, $attrs, $controller) {
+        
+        var instance;
+        var element;
+        var ck;
+        var editor;
+        
+        if (CKEDITOR) {
+            
+            element = new CKEDITOR.dom.element($element[0]);
+            editor = element.getEditor();
 
-                ck.on('pasteState', function () {
-                    $scope.$apply(function () {
-                        $controller.$setViewValue(ck.getData());
-                    });
-                });
-
-
-                /*To do on value change performance // submit
-                 * ck.updateElement();
-                 for (instance in CKEDITOR.instances) {
-                 CKEDITOR.instances[instance].updateElement();
-                 }
-                 }*/
-
-                $controller.$render = function (value) {
-
-                    ck.setData($controller.$modelValue);
-                };
-
-
+            if (editor) {
+                instance = CKEDITOR.instances[editor.name];
+                if (instance)
+                    CKEDITOR.destroy(instance);
             }
+            
+            ck = CKEDITOR.replace($element[0])
+            
+            ck.on('pasteState', function () {
+                $scope.$apply(function () {
+                    $controller.$setViewValue(ck.getData());
+                });
+            });
+
+            $controller.$render = function () {
+                ck.setData($controller.$modelValue);
+            };
+            
         }
-        return {
-            restrict: 'A',
-            require: "ngModel",
-            link: link
-        };
     }
-})();
+
+
+}]);

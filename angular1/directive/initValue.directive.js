@@ -1,21 +1,22 @@
-(function () {
-    'use strict';
-    angular
-            .module('app')
-            .directive('initValue', InitValue);
+/*
+ * directive/initValue.directive.js
+ *
+ * (c) Gaetan Vigneron 
+ *  11/05/2015
+ */
 
-    InitValue.$inject = ["$compile"];
-    function InitValue($compile) {
-        return {
-            restrict: 'A',
-            require: "ngModel",
-            link: link
-        };
+angular.module('gaetan').directive('initValue', [function () {
+        
+    return {
+        restrict: 'A',
+        require: "ngModel",
+        link: link
+    };
 
-        function link($scope, $element, $attrs, $controller) {
-            $controller.$setViewValue($element[0].value);
-            $controller.$render();
-        }
+    function link($scope, $element, $attrs, $controller) {
+        $controller.$setViewValue($element[0].value);
+        $controller.$render();
     }
-
-})();
+        
+        
+}]);

@@ -3,7 +3,7 @@ angular.module('component').component('getCode', {
         <section>
             <h1>Code</h1>
             <div class="controller">
-                <div  code="directive/code.directive.js" > </div>
+                <div code="directive/code.directive.js" > </div>
             </div>
         </section>
     `

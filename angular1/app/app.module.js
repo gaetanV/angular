@@ -5,6 +5,7 @@
         //System
         'ngRoute',
         //Component
+        'gaetan',
         'component-rest',
         'component',
         'component-factory'

@@ -1,59 +1,61 @@
-(function () {
-    'use strict';
+/*
+ * directive/gitRepro.directive.js
+ *
+ * (c) Gaetan Vigneron 
+ *  11/05/2015
+ */
 
-    angular
-            .module('app')
-            .directive('gitRepro', GitRepro);
+angular.module('gaetan').directive('gitRepro', ['$http', function ($http) {
+        
+    return {
+       transclude: true,
+       compile: compile,
 
-    GitRepro.$inject = ["$compile", "$http"];
-    function GitRepro($compile, $http) {
+    };
+    
+    function compile($element, $attrs) {
+
         return {
-            transclude: true,
-            compile: compile,
+            pre: preLink
+        }
 
-        };
-        function compile($element, $attrs, transclude) {
+        function preLink() {
+            
+            var optionRepro = parseDomJson($attrs.gitRepro);
+            
+            var urlsGit = "https://api.github.com/repos/" + optionRepro.user + "/" + optionRepro.repositories + "/git/trees/" + optionRepro.branch + "?recursive=1"
+
+            $http.get(urlsGit).then(successListCallback, errorCallback);
+            function successListCallback(response) {
+
+                for (var file in response.data.tree) {
+
+                    if (response.data.tree[file].path == optionRepro.path) {
 
 
-            return {
-                pre: preLink
+                        $http.get(response.data.tree[file].url).then(successFileCallback, errorCallback);
+                        return;
+                    }
+                }
+                console.log("no match path");
+            }
+            function successFileCallback(response) {
+                var str = atob(response.data.content);
+                var pre = document.createElement("PRE")
+                pre.innerHTML = str;
+                pre.className = "language-javascript"
+                $element.append(pre);
+
+                Prism.highlightElement(pre);
+
             }
 
-            function preLink() {
-                var optionRepro = parseDomJson($attrs.gitRepro);
-                var urlsGit = "https://api.github.com/repos/" + optionRepro.user + "/" + optionRepro.repositories + "/git/trees/" + optionRepro.branch + "?recursive=1"
-
-                $http.get(urlsGit).then(successListCallback, errorCallback);
-                function successListCallback(response) {
-
-                    for (var file in response.data.tree) {
-
-                        if (response.data.tree[file].path == optionRepro.path) {
-
-
-                            $http.get(response.data.tree[file].url).then(successFileCallback, errorCallback);
-                            return;
-                        }
-                    }
-                    console.log("no match path");
-                }
-                function successFileCallback(response) {
-                    var str = atob(response.data.content);
-                    var pre = document.createElement("PRE")
-                    pre.innerHTML = str;
-                    pre.className = "language-javascript"
-                    $element.append(pre);
-
-                    Prism.highlightElement(pre);
-
-                }
-
-                function errorCallback(e) {
-                    console.log("wrong url");
-                }
+            function errorCallback(e) {
+                console.log("wrong url");
             }
         }
     }
+
     /**
      * @parm $domjson {String}
      * @return {object}
@@ -69,6 +71,7 @@
         }
 
         return options;
-
     }
-})();
+       
+        
+}]);

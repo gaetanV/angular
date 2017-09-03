@@ -1,43 +1,53 @@
-(function () {
-    'use strict';
-    angular
-            .module('app')
-            .directive('multiPattern', MultiPattern);
+/*
+ * directive/multiPattern.directive.js
+ *
+ * (c) Gaetan Vigneron 
+ *  11/05/2015
+ */
 
-    function MultiPattern() {
-        return {
-            require: '?ngModel',
-            link: link
-        };
-        function link(scope, elem, attrs, ctrl) {
-            if (!ctrl)
-                return;
-            //V1 attrs=JSON.parse(attrs.multiPattern);
-            attrs = !(/[^,:{}\[\]0-9.\-+Eaeflnr-u \n\r\t]/.test(attrs.multiPattern.replace(/"(\\.|[^"\\])*"/g, ''))) && eval('(' + attrs.multiPattern + ')');
-            for (var func in attrs) {
-                var patternExp = attrs[func];
-                if (typeof (patternExp) == "string" && patternExp.length > 0) {
-                    try {
-                        var regex = new RegExp(patternExp);
-                    } catch (e) {
-                        throw new Error('Expected ' + patternExp + ' is not a valid RegExp');
-                    }
-                }
-                ;
-                if (!regex.test) {
-                    throw new Error('Expected ' + patternExp + ' to be a RegExp');
-                }
-                ;
-                validator(regex);
-            }
+angular.module('gaetan').directive('multiPattern', [function () {
 
-            function validator(regex) {
-                ctrl.$validators[func] = function (value) {
-                    return  regex.test(value);
-                };
+    return {
+        restrict: 'A',
+        require: 'ngModel',
+        link: link
+    };
+    
+    function link($scope, $element, $attrs, $controller) {
+        
+        var tmpPatternExp;
+        var attrs = !(/[^,:{}\[\]0-9.\-+Eaeflnr-u \n\r\t]/.test($attrs.multiPattern.replace(/"(\\.|[^"\\])*"/g, ''))) && eval('(' + $attrs.multiPattern + ')');
+           
+        for (var func in attrs) {
+            
+            tmpPatternExp = attrs[func];
+            
+            if (typeof (tmpPatternExp) === "string" && tmpPatternExp.length > 0) {
+                try {
+                    var regex = new RegExp(tmpPatternExp);
+                } catch (e) {
+                    throw new Error('Expected ' + tmpPatternExp + ' is not a valid RegExp');
+                }
             }
-            ;
-            ctrl.$validate();
+            
+            if (!regex.test) {
+                throw new Error('Expected ' + tmpPatternExp + ' to be a RegExp');
+            }
+            
+            /**
+             * @Injection match validation
+             */
+            validator(regex);
         }
+
+        function validator(regex) {
+            $controller.$validators[func] = function (value) {
+                return  regex.test(value);
+            };
+        }
+
+        $controller.$validate();
     }
-})();
+
+    
+}]);

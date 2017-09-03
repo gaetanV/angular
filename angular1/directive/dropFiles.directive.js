@@ -1,35 +1,26 @@
 /*
  * directive/dropeFiles.js
- * This file is part of the angular directive package.
  *
- * (c) Gaetan Vigneron <gaetan@webworkshops.fr>
- *  V 0.2.0
- *  03/05/2015
- *  
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
+ * (c) Gaetan Vigneron 
+ *  11/05/2015
  */
 
 /**
- * @syntax  ng-drop-file 
  * @exemple ng-drop-file="{maxsize:72000,mimeTypes:['image/png']}"
- * @dom input
- * @require ngModel
  * @param {Json} 
  * - Option: maxsize {Integer} unit(K)
  * - Option: mimeTypes {array}
  */
 
-(function () {
-    'use strict';
-
-    angular
-            .module('app')
-            .directive('ngDropFile', ngDropFile);
-
-    ngDropFile.$inject = ['$compile'];
-    function ngDropFile($compile) {
-        var link = function ($scope, $element, $attrs, $controller) {
+angular.module('gaetan').directive('ngDropFile', ['$compile', function ($compile) {
+        
+    return {
+        restrict: 'A',
+        require: "ngModel",
+        link: link,
+    };
+        
+    function link($scope, $element, $attrs, $controller) {
             $element.addClass("drop-file-hidden");
             var multipleFile = $attrs.multiple ? true : false;
             var option = {};
@@ -192,12 +183,5 @@
             $element.on('change', handleChange);
 
         }
-        return {
-            restrict: 'A',
-            require: "ngModel",
-            link: link,
-        };
-    }
- 
-
-})();
+        
+}]);

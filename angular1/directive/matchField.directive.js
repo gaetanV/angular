@@ -1,68 +1,49 @@
 /*
  * directive/matchField.directive.js
- * This file is part of the angular directive package.
  *
- * (c) Gaetan Vigneron <gaetan@webworkshops.fr>
- *  V 0.2.0
- *  13/05/2015
- *  
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
+ * (c) Gaetan Vigneron 
+ *  11/05/2015
  */
 
-/**
- * #CONSTRUCT
- * 
- *  @target dom {select}
- *  @syntax  match-field {attribut}  
- *      ng-model {entity}  reference
- *  @Require : ng-model {attribut}  
- *  @exemple : [    match-field= "user.pass" ]
- *   
- * # RESULT 
- * 
- * ##  Form 
- * $validators.match {intger}
- * @exemple : [ form.passCtr.$error.match ]
- *
- */
+angular.module('gaetan').directive('matchField', [function () {
+        
+    return {
+        restrict: 'A',
+        require: 'ngModel',
+        link: link
+    };
 
+    //////////
 
-(function () {
-    'use strict';
-    angular
-            .module('app')
-            .directive('matchField', MatchField);
+    function link($scope, $element, $attrs, $controller) {
 
-    function MatchField() {
-        return {
-            require: '?ngModel',
-            link: link
+        var field = $attrs.matchField;
+        var match;
+        
+        $scope.$watch(field,onModelChange);
+        
+        /**
+         * @Error requiere ng-model
+         */
+        if (!$controller)
+            return;
+
+        /**
+         * @Injection match validation
+         */
+        $controller.$validators.match = function (modelValue) {
+            return modelValue === match || false;
         };
-        function link(scope, elem, attrs, ctrl) {
-            var field = attrs.matchField;
-            var match;
-            /**
-             * @Error requiere ng-model
-             */
-            if (!ctrl)
-                return;
-            /**
-             * @Injection match validation
-             */
-            ctrl.$validators.match = function (modelValue, viewValue) {
-                return modelValue === match || false;
-            }
-            /**
-             * @Observe  ng-model (field) change
-             */
-            scope.$watch(field,
-                    function (val) {
-                        match = val;
-                        ctrl.$validate();
-                    }
-            );
-        }
-    }
 
-})();
+        /**
+         * @Observe  ng-model (field) change
+         */
+        function onModelChange(val) {
+              match = val;
+              $controller.$validate();
+        }
+
+
+
+    }      
+}]);

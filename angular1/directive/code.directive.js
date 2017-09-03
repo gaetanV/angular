@@ -1,43 +1,50 @@
-(function () {
-    'use strict';
-    angular
-            .module('app')
-            .directive('code', Code);
+/*
+ * directive/code.directive.js
+ *
+ * (c) Gaetan Vigneron 
+ *  11/05/2015
+ * 
+ * This directive require Prism library
+ */
 
-    Code.$inject = ["$compile", "$http", "$location"];
-    function Code($compile, $http, $location) {
+angular.module('gaetan').directive('code', ['$http', function ($http) {
+
+    return {
+        restrict: 'A',
+        transclude: true,
+        compile: compile,
+    };
+
+    //////////
+
+    function compile($element, $attrs) {
+        
+        var preDom;
+        
         return {
-            transclude: true,
-            compile: compile,
+            pre: preLink
+        }
 
-        };
-        function compile($element, $attrs, transclude) {
-
-
-            return {
-                pre: preLink
-            }
-
-            function preLink() {
-
-                var url = $attrs.code
-
-
-                $http.get(url).then(successCallback, errorCallback);
-                function successCallback(response) {
-                    var str = response.data;
-                    var pre = document.createElement("PRE")
-                    pre.innerHTML = str;
-                    pre.className = "language-javascript"
-                    $element.append(pre);
-                    Prism.highlightElement(pre);
-                }
-
-                function errorCallback(e) {
-                    console.log("wrong url");
-                }
+        //////////
+        
+        function preLink() {
+            if (Prism) {
+                $http.get($attrs.code).then(successCallback, errorCallback);
             }
         }
-    }
+        
+        function successCallback(response) {
+            preDom = document.createElement("PRE")
+            preDom.innerHTML = response.data;
+            preDom.className = "language-javascript"
+            $element.append(preDom);
+            Prism.highlightElement(preDom);
+        }
 
-})();
+        function errorCallback(e) {
+            console.log("wrong url");
+        }
+
+
+    }
+}]);

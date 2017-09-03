@@ -1,20 +1,11 @@
 /*
  * directive/ngdrag.directive.js
- * This file is part of the angular directive package.
  *
- * (c) Gaetan Vigneron <gaetan@webworkshops.fr>
- *  V 0.3.0
- *  12/05/2015
- *  
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
+ * (c) Gaetan Vigneron 
+ *  11/05/2015
  */
 
 /**
- * #CONSTRUCT
- * 
- *  ##DRAG
- *  @target dom 
  *  @syntax ng-drag {attribut}  
  *          - optional : namespace {string} 
  *          - optional : transport  {entiy|entities} 
@@ -39,121 +30,8 @@
  *  @exemple : [  ng-drop = "namespace:'groupe1' ,  callback:'add( $transport , list  )' , constraint:'notChild($drag.item , list)' " , ng-drop = ""]
  *
  */
-(function () {
-    'use strict';
-    angular
-            .module('app')
-            .directive('ngDrag', NgDrag);
+angular.module('gaetan').directive('ngDrag', ['$compile','$parse', function ($compile,$parse) {
 
-    NgDrag.$inject = ["$compile", "$parse"];
-
-    function NgDrag($compile, $parse) {
-        return {
-            restrict: 'A',
-            transclude: true,
-            template: '<span ng-transclude></span>',
-            link: link
-        };
-
-        function link($scope, element, attrs, module, $transclude) {
-            /**
-             * @Define options
-             */
-            var optionDrag = parseDomJson(attrs.ngDrag);
-            var optionDrop = {};
-
-            if (!optionDrag.namespace)
-                optionDrag.namespace = "";
-
-            /**
-             * @Observe element{dom} on mousedown  
-             */
-            element.on('mousedown', mousedown);
-            function mousedown(e) {
-                new drag(e, optionDrag.namespace, isValid, dropTo);
-                return false;
-            }
-            ;
-
-            /**  
-             *  @param  action {string} function as string
-             *  @param  target {dom}
-             *  @param   callback {function}
-             * @return   /callback({bollean})
-             *  Eval action in target scope and apply to the view
-             */
-            function exeScopeFunction(action, target, callback) {
-                var scopeDrop = angular.element(target).scope();
-                scopeDrop.$drag = $scope;
-                scopeDrop.$transport = $scope[optionDrag.transport];
-                var $fn = function () {
-                    var fn = $parse(action);
-                    var result = fn(scopeDrop, {$event: target});
-                    if (callback)
-                        callback(result);
-                }
-                if (scopeDrop.$root.$$phase == '$apply')
-                    $fn();
-                else
-                    scopeDrop.$apply($fn);
-            }
-            ;
-
-            /**
-             * @On drag{object}  drop-over  
-             * @param  target {dom}
-             * @param  callback {function}
-             * @return /callback({bollean})
-             */
-            var isValid = function (target, callback) {
-                optionDrop = parseDomJson(target.getAttribute("ng-drop"));
-                if (!optionDrop.constraint)
-                    callback(true);
-                else
-                    exeScopeFunction(optionDrop.constraint, target, function ($flag) {
-                        callback($flag);
-                    })
-
-            }
-
-            /**
-             * @On drag{object}  drop  
-             * @param  target {dom}
-             *  - Eval drag callback 
-             *  - Eval drop callback | Build a Clone 
-             */
-            var dropTo = function (target) {
-
-                optionDrop = parseDomJson(target.getAttribute("ng-drop"));
-
-
-                if (optionDrag.callback) {
-                    exeScopeFunction(optionDrag.callback, target);
-                }
-                if (optionDrop.callback) {
-                    exeScopeFunction(optionDrop.callback, target);
-                } else {
-                    clone(target);
-                }
-
-                /**
-                 * @Constraint Build a Clone of this element and append to target
-                 */
-                function clone() {
-                    var cloneElement = angular.element(element[0].cloneNode(false));
-                    var callback = $transclude(function (clone) {
-                        cloneElement.append(clone);
-                        cloneElement = $compile(cloneElement)($scope);
-                        angular.element(target).append(cloneElement);
-                    });
-                    $scope.$apply(callback);
-                }
-                ;
-            };
-        }
-        ;
-    }
-    ;
 
     /**
      *  @param   e {event dom}
@@ -355,6 +233,113 @@
         this.ngdropList = [];
     };
 
+    return {
+        restrict: 'A',
+        transclude: true,
+        template: '<span ng-transclude></span>',
+        link: link
+    };
+
+    function link($scope, element, attrs, module, $transclude) {
+        /**
+         * @Define options
+         */
+        var optionDrag = parseDomJson(attrs.ngDrag);
+        var optionDrop = {};
+
+        if (!optionDrag.namespace)
+            optionDrag.namespace = "";
+
+        /**
+         * @Observe element{dom} on mousedown  
+         */
+        element.on('mousedown', mousedown);
+        function mousedown(e) {
+            new drag(e, optionDrag.namespace, isValid, dropTo);
+            return false;
+        }
+        ;
+
+        /**  
+         *  @param  action {string} function as string
+         *  @param  target {dom}
+         *  @param   callback {function}
+         * @return   /callback({bollean})
+         *  Eval action in target scope and apply to the view
+         */
+        function exeScopeFunction(action, target, callback) {
+            var scopeDrop = angular.element(target).scope();
+            scopeDrop.$drag = $scope;
+            scopeDrop.$transport = $scope[optionDrag.transport];
+            var $fn = function () {
+                var fn = $parse(action);
+                var result = fn(scopeDrop, {$event: target});
+                if (callback)
+                    callback(result);
+            }
+            if (scopeDrop.$root.$$phase == '$apply')
+                $fn();
+            else
+                scopeDrop.$apply($fn);
+        }
+        ;
+
+        /**
+         * @On drag{object}  drop-over  
+         * @param  target {dom}
+         * @param  callback {function}
+         * @return /callback({bollean})
+         */
+        var isValid = function (target, callback) {
+            optionDrop = parseDomJson(target.getAttribute("ng-drop"));
+            if (!optionDrop.constraint)
+                callback(true);
+            else
+                exeScopeFunction(optionDrop.constraint, target, function ($flag) {
+                    callback($flag);
+                })
+
+        }
+
+        /**
+         * @On drag{object}  drop  
+         * @param  target {dom}
+         *  - Eval drag callback 
+         *  - Eval drop callback | Build a Clone 
+         */
+        var dropTo = function (target) {
+
+            optionDrop = parseDomJson(target.getAttribute("ng-drop"));
+
+
+            if (optionDrag.callback) {
+                exeScopeFunction(optionDrag.callback, target);
+            }
+            if (optionDrop.callback) {
+                exeScopeFunction(optionDrop.callback, target);
+            } else {
+                clone(target);
+            }
+
+            /**
+             * @Constraint Build a Clone of this element and append to target
+             */
+            function clone() {
+                var cloneElement = angular.element(element[0].cloneNode(false));
+                var callback = $transclude(function (clone) {
+                    cloneElement.append(clone);
+                    cloneElement = $compile(cloneElement)($scope);
+                    angular.element(target).append(cloneElement);
+                });
+                $scope.$apply(callback);
+            }
+            ;
+        };
+    }
+
+
+
+
     /**
      * @parm $domjson {String}
      * @return {object}
@@ -370,4 +355,5 @@
         }
         return options;
     }
-})();
+
+}]);

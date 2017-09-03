@@ -18,9 +18,12 @@ gulp.task('ts', function () {
 });
 
 gulp.task('directive', function () {
-    return gulp.src(['directive/**/*.js'])
+    return gulp.src([
+        'directive/gaetan.module.js',
+        'directive/**/*.js'
+    ])
        .pipe(concat('directive.js'))
-       .pipe(uglify())
+       //.pipe(uglify())
        .pipe(gulp.dest('app/'));
 });
 

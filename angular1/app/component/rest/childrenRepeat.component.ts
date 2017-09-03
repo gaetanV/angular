@@ -53,7 +53,7 @@ angular.module('component-rest').component('childrenRepeat', {
                         </div>
                     </li>
                 </ul>
-                <div class="scope">  {{$ctrl.sample}}</div>
+                <div class="scope">{{$ctrl.sample}}</div>
             </div>
         </section>
     `,
