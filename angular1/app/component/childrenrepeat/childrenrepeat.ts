@@ -1,35 +1,42 @@
-class ChildrenRepeatController{
-    
-    sample: Array<any> = [];
-    
+class ChildrenRepeatController {
+
+    sample: Array<sample> = [];
+
     constructor(
         $element,
-        ChildrenService,
-    ){
+        ChildrenService: ChildrenService,
+    ) {
 
-        ChildrenService.getSample().then((sample)=>{
+        ChildrenService.getSample().then((sample) => {
             this.sample = sample;
             $element.scope().$digest();
         });
-       
-    }  
-    
-    pushAfter($self) {
+
+    }
+
+    pushAfter($self: sample): void {
         if ($self.children) {
             this.pushIn($self.children);
         } else
-            $self.children = [{title: "pushAfter Title 1"}];
+            $self.children = [{
+                title: "pushAfter Title 1",
+                children: [],
+                id: 0
+            }];
     };
 
-    pushIn($parent) {
-        $parent.push({title: "pushIn Title 2"});
-
+    pushIn($parent: Array<sample>): void {
+        $parent.push({
+            title: "pushIn Title 2",
+            children: [],
+            id: 0
+        });
     };
 }
-    
+
 angular.module('app.childrenRepeat').component('pageChildrenrepeat', {
-    template:
-        `<section>
+    template: `
+        <section>
             <h1>Children-repeat (compile)</h1>
             <div class="controller" >
                 <ul class="list-child" children-repeat ="item in $ctrl.sample track by children">
@@ -48,6 +55,7 @@ angular.module('app.childrenRepeat').component('pageChildrenrepeat', {
                 </ul>
                 <div class="scope">  {{$ctrl.sample}}</div>
             </div>
-        </section>`,
-    controller: ['$element','ChildrenService', ChildrenRepeatController]
- });
+        </section>
+    `,
+    controller: ['$element', 'ChildrenService', ChildrenRepeatController]
+});

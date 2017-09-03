@@ -1,25 +1,24 @@
-function QuickEditController($scope,ItemFactory) {
-  
-    $scope.clone = function (tscope) {
-        tscope.form = angular.copy(tscope.item);
-        tscope.submit = function () {
-            if (tscope.editItem.$valid === true) {
-
-                $scope.pItem1[tscope.$index] = angular.copy(tscope.form);
-                $scope.quickModel = "read";
+class QuickEditController {
+    constructor($scope, ItemFactory) {
+        
+        $scope.clone = function (tscope) {
+            tscope.form = angular.copy(tscope.item);
+            tscope.submit = function ():void {
+                if (tscope.editItem.$valid === true) {
+                    $scope.pItem1[tscope.$index] = angular.copy(tscope.form);
+                    $scope.quickModel = "read";
+                }
             }
-            ;
-
         };
-    }; 
- 
-    $scope.pItem1 = [new ItemFactory.cap(), new ItemFactory.shirt(), new ItemFactory.shirt()];
- 
-   
-}
 
-angular.module('app.quickedit').component('quickedit',{
-  template:`
+        $scope.pItem1 = [new ItemFactory.cap(), new ItemFactory.shirt(), new ItemFactory.shirt()];
+
+    }
+
+};
+
+angular.module('app.quickedit').component('quickedit', {
+    template: `
         <section>
             <h1>Quick edit </h1>
             <div class="controller"  >
@@ -47,5 +46,5 @@ angular.module('app.quickedit').component('quickedit',{
             </div>
         </section>
     `,
-    controller: ['$scope','ItemFactory',QuickEditController]
+    controller: ['$scope', 'ItemFactory', QuickEditController]
 });

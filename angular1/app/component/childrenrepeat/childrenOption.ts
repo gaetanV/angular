@@ -1,25 +1,25 @@
-class ChildrenOptionController{
-    
-    result: Array<any> = ["2","1"];
-    result2: Array<any> = [];
-    
+class ChildrenOptionController {
+
+    result: Array<string> = ["2", "1"];
+    result2: Array<string> = [];
+
     constructor(
         $scope,
         $element,
-        ChildrenService,
-    ){
-        
-        ChildrenService.getSample().then((sample)=>{
+        ChildrenService: ChildrenService,
+    ) {
+
+        ChildrenService.getSample().then((sample) => {
             $scope.sample = sample;
             $element.scope().$digest();
         });
-        
+
     }
 }
 
 angular.module('app.childrenRepeat').component('pageChildrenoption', {
-        template:
-            `<section>
+    template: `
+            <section>
                 <h1>Children-option</h1>
                 <div class="controller childDrop" >
                     {{ $ctrl.result}}
@@ -28,6 +28,7 @@ angular.module('app.childrenRepeat').component('pageChildrenoption', {
                     {{ $ctrl.result2}}
                     <select children-option="id as title in sample track by children" required ng-model="$ctrl.result2" ></select>
                 </div>
-            </section>`,
-        controller: ['$scope','$element','ChildrenService',ChildrenOptionController]
+            </section>
+        `,
+    controller: ['$scope', '$element', 'ChildrenService', ChildrenOptionController]
 });

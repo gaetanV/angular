@@ -1,5 +1,5 @@
-angular.module('app.form').component('ckeditor',{
-  template:`
+angular.module('app.form').component('ckeditor', {
+    template: `
         <section>
             <h1>Ck editor</h1>
             <div class="controller">
@@ -8,6 +8,5 @@ angular.module('app.form').component('ckeditor',{
                 <div  code="directive/ckeditor.directive.js" > </div>
             </div>
         </section>
-    `,
-    controller: [()=>{}]
+    `
 });

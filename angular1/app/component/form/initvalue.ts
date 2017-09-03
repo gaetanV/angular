@@ -1,5 +1,5 @@
-angular.module('app.form').component('initValue',{
-  template:`
+angular.module('app.form').component('initValue', {
+    template: `
         <section>
             <h1>Init Value</h1>
             <div class="controller">
@@ -9,6 +9,5 @@ angular.module('app.form').component('initValue',{
                 </form>
             </div>
         </section>
-    `,
-    controller: [()=>{}]
+    `
 });

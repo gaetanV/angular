@@ -11,6 +11,5 @@ angular.module('app.dropfiles').component('dropFiles',{
             <input type="submit"  value="Post" />
             {{file}}
         </form>
-  `,
-  controller: function(){}
+    `
 });

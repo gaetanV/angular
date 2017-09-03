@@ -1,6 +1,6 @@
 angular.module('app.date').component('pageDatepicker',{
-    template:
-       `<section>
+    template:`
+        <section>
             <h1>Date Picker</h1>
             <div class="controller">
                 <form name="formDatePicker"  class="css-form" >
@@ -8,6 +8,6 @@ angular.module('app.date').component('pageDatepicker',{
                     <input type="text" ng-model="date" date-picker="fr"  name="uDate" required="" />
                 </form>
             </div>
-        </section>`,
-  controller: function(){}
+        </section>
+    `
 });

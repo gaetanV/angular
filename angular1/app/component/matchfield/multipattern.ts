@@ -1,5 +1,5 @@
-angular.module('app.field').component('multipattern',{
-  template:`
+angular.module('app.field').component('multipattern', {
+    template: `
         <section>
             <h1>Form : Multi Pattern </h1>
             <div class="controller">
@@ -14,6 +14,5 @@ angular.module('app.field').component('multipattern',{
                 </form>
             </div>
         </section>
-    `,
-    controller: [()=>{}]
+    `
 });

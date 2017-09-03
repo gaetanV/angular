@@ -1,15 +1,15 @@
 interface sample {
-    title:String;
-    children:Array<sample>;
-    id:number;
+    title: String;
+    children: Array<sample>;
+    id: number;
 }
-        
+
 class ChildrenService {
-    
+
     constructor() {}
-    
-    getSample() : Promise<Array<sample>> {
-        return new Promise(function(resolve, reject){
+
+    getSample(): Promise<Array<sample>> {
+        return new Promise(function (resolve, reject) {
             resolve([
                 {
                     title: "Sample No children 1",
@@ -38,9 +38,9 @@ class ChildrenService {
                     ]
                 }
             ]);
-        }) 
+        })
     }
-   
+
 };
 
 angular.module('app.rest').service('ChildrenService', ChildrenService);

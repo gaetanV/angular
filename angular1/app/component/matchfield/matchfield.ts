@@ -1,5 +1,5 @@
-angular.module('app.field').component('matchfield',{
-  template:`
+angular.module('app.field').component('matchfield', {
+    template: `
         <section>
             <h1>Form : PassWord Match</h1>
             <div class="controller">
@@ -20,6 +20,5 @@ angular.module('app.field').component('matchfield',{
                 </form>
             </div>
         </section>
-    `,
-    controller: [()=>{}]
+    `
 });
