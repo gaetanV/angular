@@ -3,13 +3,13 @@ class ChildrenRepeatController {
     sample: Array<sample> = [];
 
     constructor(
-        $element,
+        $scope,
         ChildrenService: ChildrenService,
     ) {
 
         ChildrenService.getSample().then((sample:Array<sample>) => {
             this.sample = sample;
-            $element.scope().$digest();
+            $scope.$digest();
         });
 
     }
@@ -57,5 +57,5 @@ angular.module('component-rest').component('childrenRepeat', {
             </div>
         </section>
     `,
-    controller: ['$element', 'ChildrenService', ChildrenRepeatController]
+    controller: ['$scope', 'ChildrenService', ChildrenRepeatController]
 });

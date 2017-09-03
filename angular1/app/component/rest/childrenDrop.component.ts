@@ -2,13 +2,12 @@ class ChildrenDropController {
 
     constructor(
         $scope,
-        $element,
         ChildrenService: ChildrenService,
     ) {
 
         ChildrenService.getSample().then((sample:Array<sample>) => {
             $scope.list = sample;
-            $element.scope().$digest();
+            $scope.$digest();
         });
 
     }
@@ -79,5 +78,5 @@ angular.module('component-rest').component('childrenDrop', {
                 </div>
             </section>
         `,
-    controller: ["$scope", '$element', 'ChildrenService', ChildrenDropController]
+    controller: ["$scope", 'ChildrenService', ChildrenDropController]
 });

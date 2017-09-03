@@ -5,13 +5,12 @@ class ChildrenOptionController {
 
     constructor(
         $scope,
-        $element,
         ChildrenService: ChildrenService,
     ) {
 
         ChildrenService.getSample().then((sample:Array<sample>) => {
             $scope.sample = sample;
-            $element.scope().$digest();
+            $scope.$digest();
         });
 
     }
@@ -29,5 +28,5 @@ angular.module('component-rest').component('childrenOption', {
                 </div>
             </section>
         `,
-    controller: ['$scope', '$element', 'ChildrenService', ChildrenOptionController]
+    controller: ['$scope', 'ChildrenService', ChildrenOptionController]
 });

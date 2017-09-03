@@ -3,7 +3,7 @@ class FinderController {
     user:object =  {
         Car: 1
     };
-    cars: Array<car>;
+    cars: Array<car> = [];
     
     
     constructor(

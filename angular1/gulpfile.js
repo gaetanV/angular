@@ -2,7 +2,6 @@ var gulp = require('gulp');
 var ts = require('gulp-typescript');
 var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
-var closureCompiler = require('gulp-closure-compiler');
 
 gulp.task('ts', function () {
     return gulp.src([
@@ -23,7 +22,7 @@ gulp.task('directive', function () {
         'directive/**/*.js'
     ])
        .pipe(concat('directive.js'))
-       //.pipe(uglify())
+       .pipe(uglify())
        .pipe(gulp.dest('app/'));
 });
 
