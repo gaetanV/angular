@@ -1,4 +1,4 @@
-angular.module('app.form').component('initValue', {
+angular.module('component').component('initValue', {
     template: `
         <section>
             <h1>Init Value</h1>

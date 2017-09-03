@@ -7,15 +7,6 @@ var closureCompiler = require('gulp-closure-compiler');
 gulp.task('ts', function () {
     return gulp.src([
         'app/service/rest.module.ts',
-        'app/component/childrenrepeat/childrenrepeat.module.ts',
-        'app/component/data/date.module.ts',
-        'app/component/finder/finder.module.ts',
-        'app/component/quickedit/quickedit.module.ts',
-        'app/component/getcode/getcode.module.ts', 
-        'app/component/form/form.module.ts', 
-        'app/component/matchfield/field.module.ts', 
-        'app/component/ngdrag/ngdrag.module.ts', 
-        'app/component/dropfiles/dropfiles.module.ts', 
         'app/factory/factory.module.ts', 
         'app/**/*.ts'
     ])

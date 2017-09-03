@@ -16,8 +16,7 @@ class ChildrenOptionController {
 
     }
 }
-
-angular.module('app.childrenRepeat').component('pageChildrenoption', {
+angular.module('component-rest').component('childrenOption', {
     template: `
             <section>
                 <h1>Children-option</h1>

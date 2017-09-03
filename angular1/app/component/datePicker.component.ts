@@ -1,4 +1,4 @@
-angular.module('app.date').component('pageDatepicker',{
+angular.module('component').component('pageDatepicker',{
     template:`
         <section>
             <h1>Date Picker</h1>

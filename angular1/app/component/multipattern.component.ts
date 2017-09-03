@@ -1,4 +1,4 @@
-angular.module('app.field').component('multipattern', {
+angular.module('component').component('multipattern', {
     template: `
         <section>
             <h1>Form : Multi Pattern </h1>

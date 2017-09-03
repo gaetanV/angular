@@ -14,11 +14,11 @@
         .when('/', {
             templateUrl: './app/index.html',
         }).when('/childrenrepeat', {
-            template: '<page-childrenrepeat/>'
+            template: '<children-repeat/>'
         }).when('/childrenDrop', {
-            template: '<page-childrendrop/>'
+            template: '<children-drop/>'
         }).when('/childrenOption', {
-            template: '<page-childrenoption/>'
+            template: '<children-option/>'
         }).when('/datePicker', {
             template: '<page-datepicker/>',
         }).when('/ngdrag', {

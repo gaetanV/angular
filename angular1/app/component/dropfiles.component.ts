@@ -1,4 +1,4 @@
-angular.module('app.dropfiles').component('dropFiles',{
+angular.module('component').component('dropFiles',{
     template:`
         <form  method="POST" action="" name="form">
             {{files}} 

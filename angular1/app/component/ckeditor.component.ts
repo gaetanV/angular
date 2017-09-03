@@ -1,4 +1,4 @@
-angular.module('app.form').component('ckeditor', {
+angular.module('component').component('ckeditor', {
     template: `
         <section>
             <h1>Ck editor</h1>

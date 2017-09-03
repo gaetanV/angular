@@ -60,7 +60,7 @@ class ChildrenDropController {
 
 }
 
-angular.module('app.childrenRepeat').component('pageChildrendrop', {
+angular.module('component-rest').component('childrenDrop', {
     template: `
             <section>
                 <h1>Children-repeat + Ng-drop directive</h1>
@@ -80,6 +80,4 @@ angular.module('app.childrenRepeat').component('pageChildrendrop', {
             </section>
         `,
     controller: ["$scope", '$element', 'ChildrenService', ChildrenDropController]
-}
-);
-
+});

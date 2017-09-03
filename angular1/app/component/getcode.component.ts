@@ -1,4 +1,4 @@
-angular.module('app.getcode').component('getCode', {
+angular.module('component').component('getCode', {
     template: `
         <section>
             <h1>Code</h1>

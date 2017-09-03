@@ -1,4 +1,4 @@
-angular.module('app.getcode').component('getGit', {
+angular.module('component').component('getGit', {
     template: `
         <section>
             <h1>GIT : Repro</h1>

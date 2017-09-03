@@ -34,7 +34,7 @@ class ChildrenRepeatController {
     };
 }
 
-angular.module('app.childrenRepeat').component('pageChildrenrepeat', {
+angular.module('component-rest').component('childrenRepeat', {
     template: `
         <section>
             <h1>Children-repeat (compile)</h1>

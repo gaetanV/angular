@@ -1,4 +1,4 @@
-angular.module('app.field').component('matchfield', {
+angular.module('component').component('matchfield', {
     template: `
         <section>
             <h1>Form : PassWord Match</h1>

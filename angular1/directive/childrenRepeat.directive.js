@@ -54,6 +54,7 @@
 
     function ChildrenRepeat() {
         return {
+            restrict: 'A',
             transclude: true,
             compile: compile,
         };

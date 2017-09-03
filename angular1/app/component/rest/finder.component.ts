@@ -6,12 +6,14 @@ class FinderController {
     cars: Array<car>;
     
     
-    constructor(CarsService: CarsService) {
+    constructor(
+        CarsService: CarsService
+    ) {
         CarsService.getCars().then((cars:Array<car>) => this.cars = cars);
     }
 }
 
-angular.module('app.finder').component('finder', {
+angular.module('component-rest').component('finder', {
     template:`
         <section>
             <h1>Finder Field</h1>

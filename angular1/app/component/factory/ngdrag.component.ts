@@ -1,18 +1,21 @@
 class NgDragController {
 
-    pItem1: Array<any>;
-    pItem2: Array<any>;
+    pItem1: Array<itemClass>;
+    pItem2: Array<itemClass>;
 
-    constructor($scope, ItemFactory) {
+    constructor(
+        $scope,
+        ItemFactory: ItemFactory
+    ) {
         this.pItem1 = [new ItemFactory.cap(), new ItemFactory.shirt(), new ItemFactory.shirt()];
         this.pItem2 = [new ItemFactory.cap(), new ItemFactory.cap(), new ItemFactory.shoe()];
     }
 
-    remove(list:Array<any>, $index:number): void {
+    remove(list: Array<itemClass>, $index: number): void {
         list.splice($index, 1);
     }
 
-    add(list:Array<any>, item:any): void {
+    add(list: Array<itemClass>, item: itemClass): void {
         if (list.indexOf(item) == -1) {
             list.push(item)
         } else {
@@ -21,12 +24,12 @@ class NgDragController {
         }
     }
 
-    isValid($transport:any): boolean {
+    isValid($transport: any): boolean {
         return $transport.name == "cap";
     }
 }
 
-angular.module('app.ngDrag').component('ngOutDrag', {
+angular.module('component-factory').component('ngOutDrag', {
     template: `
         <div class="controller"  >
             <h2>CONTROLLER 2  ( NgDrag )</h2>
@@ -45,7 +48,7 @@ angular.module('app.ngDrag').component('ngOutDrag', {
     controller: ['$scope', 'ItemFactory', NgDragController]
 });
 
-angular.module('app.ngDrag').component('ngDrag', {
+angular.module('component-factory').component('ngDrag', {
     template: `
         <section>
             <h1>Drag and Drop </h1>

@@ -1,9 +1,12 @@
 class QuickEditController {
-    constructor($scope, ItemFactory) {
-        
+    constructor(
+        $scope,
+        ItemFactory: ItemFactory
+    ) {
+
         $scope.clone = function (tscope) {
             tscope.form = angular.copy(tscope.item);
-            tscope.submit = function ():void {
+            tscope.submit = function (): void {
                 if (tscope.editItem.$valid === true) {
                     $scope.pItem1[tscope.$index] = angular.copy(tscope.form);
                     $scope.quickModel = "read";
@@ -17,7 +20,7 @@ class QuickEditController {
 
 };
 
-angular.module('app.quickedit').component('quickedit', {
+angular.module('component-factory').component('quickedit', {
     template: `
         <section>
             <h1>Quick edit </h1>

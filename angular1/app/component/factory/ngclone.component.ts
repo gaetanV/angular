@@ -1,16 +1,18 @@
 class NgCloneController {
 
-    pItem1: Array<any>;
-    pItem2: Array<any>;
-    
-    constructor(ItemFactory) {
+    pItem1: Array<itemClass>;
+    pItem2: Array<itemClass>;
+
+    constructor(
+        ItemFactory: ItemFactory
+    ) {
         this.pItem1 = [new ItemFactory.cap(), new ItemFactory.shirt(), new ItemFactory.shirt()];
         this.pItem2 = [new ItemFactory.cap(), new ItemFactory.cap(), new ItemFactory.shoe()];
     }
-    
+
 };
 
-angular.module('app.ngDrag').component('ngClone', {
+angular.module('component-factory').component('ngClone', {
     template: `
         <section>
             <h1>Drag and Drop and Clone </h1>

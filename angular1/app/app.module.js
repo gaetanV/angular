@@ -4,17 +4,13 @@
     angular.module('app', [
         //System
         'ngRoute',
-        //Module
-        'app.ngDrag' , 
-        'app.childrenRepeat',
-        'app.quickedit',
-        'app.field' ,
-        'app.finder',
-        'app.form',
-        'app.getcode',
-        'app.date',
-        'app.dropfiles'
+        //Component
+        'component-rest',
+        'component',
+        'component-factory'
     ]);
-
-
+    angular.module('component-rest', ['app.rest']);
+    angular.module('component', []);
+    angular.module('component-factory',['app.factory'])
+    
 })();
