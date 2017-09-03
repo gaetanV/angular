@@ -7,7 +7,7 @@ class FinderController {
     
     
     constructor(CarsService: CarsService) {
-        CarsService.getCars().then((cars) => this.cars = cars);
+        CarsService.getCars().then((cars:Array<car>) => this.cars = cars);
     }
 }
 

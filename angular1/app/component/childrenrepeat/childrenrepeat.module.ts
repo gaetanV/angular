@@ -1,1 +1,1 @@
-angular.module('app.childrenRepeat', []);
+angular.module('app.childrenRepeat', ['app.rest']);

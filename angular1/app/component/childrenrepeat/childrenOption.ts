@@ -9,7 +9,7 @@ class ChildrenOptionController {
         ChildrenService: ChildrenService,
     ) {
 
-        ChildrenService.getSample().then((sample) => {
+        ChildrenService.getSample().then((sample:Array<sample>) => {
             $scope.sample = sample;
             $element.scope().$digest();
         });

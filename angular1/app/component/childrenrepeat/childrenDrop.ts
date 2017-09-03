@@ -6,7 +6,7 @@ class ChildrenDropController {
         ChildrenService: ChildrenService,
     ) {
 
-        ChildrenService.getSample().then((sample) => {
+        ChildrenService.getSample().then((sample:Array<sample>) => {
             $scope.list = sample;
             $element.scope().$digest();
         });

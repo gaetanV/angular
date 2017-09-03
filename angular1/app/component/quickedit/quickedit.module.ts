@@ -1,1 +1,1 @@
-angular.module('app.quickedit', []);
+angular.module('app.quickedit', ['app.factory']);

@@ -8,7 +8,7 @@ class NgDragController {
         this.pItem2 = [new ItemFactory.cap(), new ItemFactory.cap(), new ItemFactory.shoe()];
     }
 
-    remove(list, $index:number): void {
+    remove(list:Array<any>, $index:number): void {
         list.splice($index, 1);
     }
 

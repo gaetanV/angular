@@ -7,7 +7,7 @@ class ChildrenRepeatController {
         ChildrenService: ChildrenService,
     ) {
 
-        ChildrenService.getSample().then((sample) => {
+        ChildrenService.getSample().then((sample:Array<sample>) => {
             this.sample = sample;
             $element.scope().$digest();
         });

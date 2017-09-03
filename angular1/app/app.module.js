@@ -4,7 +4,6 @@
     angular.module('app', [
         //System
         'ngRoute',
-        'app.rest',
         //Module
         'app.ngDrag' , 
         'app.childrenRepeat',
@@ -14,8 +13,7 @@
         'app.form',
         'app.getcode',
         'app.date',
-        'app.dropfiles',  
-        'app.factory'
+        'app.dropfiles'
     ]);
 
 

@@ -1,1 +1,1 @@
-angular.module('app.ngDrag', []);
+angular.module('app.ngDrag', ['app.factory']);
