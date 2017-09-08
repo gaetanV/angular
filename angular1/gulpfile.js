@@ -11,7 +11,8 @@ gulp.task('ts', function () {
     ])
            .pipe(ts({
                 noImplicitAny: true,
-                outFile: 'boot.js'
+                outFile: 'boot.js',
+                experimentalDecorators: true,
             }))
             .pipe(gulp.dest('app/'));
 });

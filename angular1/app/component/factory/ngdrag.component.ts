@@ -1,3 +1,60 @@
+@Component({
+    module:'component-factory',
+    selector: 'ng-out-drag',
+    template: `
+        <div class="controller"  >
+            <h2>CONTROLLER 2  ( NgDrag )</h2>
+            <h3>List Item 2</h3>
+            First Item Name :
+            <input ng-model="$ctrl.pItem2[0].name" />
+            <br/>
+            <div class="scope"> {{$ctrl.pItem2}}</div>
+            <ul class="reception" ng-drop="namespace : 'groupe1' , callback :  '$ctrl.add($ctrl.pItem2,$transport)'" >
+                <li ng-repeat="item in $ctrl.pItem2"   >
+                    <div ng-drag="transport : 'item'" > {{item.name}}</div>
+                </li>
+            </ul>
+         </div>
+    `,
+    provider:['$scope', 'ItemFactory']
+})
+@Component({
+    module:'component-factory',
+    selector: 'ng-drag',
+    template: `        
+        <section>
+            <h1>Drag and Drop </h1>
+            <div class="controller" >
+                <h2> CONTROLLER 1 ( NgDrag ) </h2>
+                <h3>List Item 1</h3>
+                First Item Name :
+
+                <input ng-model="$ctrl.pItem1[0].name" />
+                <br/>
+                <div class="scope"> {{$ctrl.pItem1}}</div>
+                <ul class="reception" ng-drop=" callback : '$ctrl.add($ctrl.pItem1,$transport)' " >
+                    <li ng-repeat="item in $ctrl.pItem1">
+                        <div  ng-drag=" namespace : 'groupe1' ,  transport : 'item' , callback : '$ctrl.remove($ctrl.pItem1,$index)' "   > {{item.name}}  </div>
+                    </li>
+                </ul>
+
+                <h3>List Item 2 (Constraint $transport.name="cap")</h3>
+                First Item Name :
+                <input ng-model="$ctrl.pItem2[0].name" />
+                <br/>
+                <div class="scope"> {{$ctrl.pItem2}}</div>
+                <ul class="reception" ng-drop=" namespace : 'groupe1' , constraint: '$ctrl.isValid($transport)' , callback : '$ctrl.add($ctrl.pItem2,$transport)'  "  >
+                    <li ng-repeat="item in $ctrl.pItem2"   >
+                        <div ng-drag=" transport : 'item' ,  callback : '$ctrl.remove($ctrl.pItem2,$index)'  " > {{item.name}}</div>
+                    </li>
+                </ul>
+            </div>
+            <ng-out-drag/>
+        </section>
+         
+    `,
+    provider:['$scope', 'ItemFactory']
+})
 class NgDragController {
 
     pItem1: Array<itemClass>;
@@ -28,57 +85,3 @@ class NgDragController {
         return $transport.name == "cap";
     }
 }
-
-angular.module('component-factory').component('ngOutDrag', {
-    template: `
-        <div class="controller"  >
-            <h2>CONTROLLER 2  ( NgDrag )</h2>
-            <h3>List Item 2</h3>
-            First Item Name :
-            <input ng-model="$ctrl.pItem2[0].name" />
-            <br/>
-            <div class="scope"> {{$ctrl.pItem2}}</div>
-            <ul class="reception" ng-drop="namespace : 'groupe1' , callback :  '$ctrl.add($ctrl.pItem2,$transport)'" >
-                <li ng-repeat="item in $ctrl.pItem2"   >
-                    <div ng-drag="transport : 'item'" > {{item.name}}</div>
-                </li>
-            </ul>
-        </div>
-        `,
-    controller: ['$scope', 'ItemFactory', NgDragController]
-});
-
-angular.module('component-factory').component('ngDrag', {
-    template: `
-        <section>
-            <h1>Drag and Drop </h1>
-            <div class="controller" >
-                <h2> CONTROLLER 1 ( NgDrag ) </h2>
-                <h3>List Item 1</h3>
-                First Item Name :
-
-                <input ng-model="$ctrl.pItem1[0].name" />
-                <br/>
-                <div class="scope"> {{$ctrl.pItem1}}</div>
-                <ul class="reception" ng-drop=" callback : '$ctrl.add($ctrl.pItem1,$transport)' " >
-                    <li ng-repeat="item in $ctrl.pItem1">
-                        <div  ng-drag=" namespace : 'groupe1' ,  transport : 'item' , callback : '$ctrl.remove($ctrl.pItem1,$index)' "   > {{item.name}}  </div>
-                    </li>
-                </ul>
-
-                <h3>List Item 2 (Constraint $transport.name="cap")</h3>
-                First Item Name :
-                <input ng-model="$ctrl.pItem2[0].name" />
-                <br/>
-                <div class="scope"> {{$ctrl.pItem2}}</div>
-                <ul class="reception" ng-drop=" namespace : 'groupe1' , constraint: '$ctrl.isValid($transport)' , callback : '$ctrl.add($ctrl.pItem2,$transport)'  "  >
-                    <li ng-repeat="item in $ctrl.pItem2"   >
-                        <div ng-drag=" transport : 'item' ,  callback : '$ctrl.remove($ctrl.pItem2,$index)'  " > {{item.name}}</div>
-                    </li>
-                </ul>
-            </div>
-            <ng-out-drag/>
-        </section>
-        `,
-    controller: ['$scope', 'ItemFactory', NgDragController]
-});
