@@ -3,7 +3,7 @@ class ChildrenRepeatController {
     sample: Array<sample> = [];
 
     constructor(
-        $scope,
+        $scope: angularScopeTypedef,
         ChildrenService: ChildrenService,
     ) {
 

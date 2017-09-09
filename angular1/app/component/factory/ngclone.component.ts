@@ -1,5 +1,5 @@
 @Component({
-    module:'component-factory',
+    module: 'component-factory',
     selector: 'ng-clone',
     template: `<section>
             <h1>Drag and Drop and Clone </h1>
@@ -13,7 +13,7 @@
             </div>
             <div class="reception"  ng-drop  > Clone Out of controller</div>
         </section>`,
-    provider:['ItemFactory']
+    provider: ['ItemFactory']
 })
 class NgCloneController {
 

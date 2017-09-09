@@ -1,15 +1,21 @@
+interface ChildrenDropControllerScopeTypedef extends angularScopeTypedef {
+    list: Array<sample>;
+}
+interface DragScopeTypedef extends angularListTypedef {
+    $collection: Array<sample>;
+}
+
 class ChildrenDropController {
 
     constructor(
-        $scope,
+        $scope: ChildrenDropControllerScopeTypedef,
         ChildrenService: ChildrenService,
     ) {
 
-        ChildrenService.getSample().then((sample:Array<sample>) => {
+        ChildrenService.getSample().then((sample: Array<sample>) => {
             $scope.list = sample;
             $scope.$digest();
         });
-
     }
 
     static inCollection(array: Array<sample>, $transport: sample): boolean {
@@ -40,11 +46,11 @@ class ChildrenDropController {
 
     }
 
-    isNotFirstDepth($dragScope): boolean {
+    isNotFirstDepth($dragScope:DragScopeTypedef): boolean {
         return $dragScope.$depth > 1;
     }
 
-    pushChildren($transport: sample, $item: sample, $dragScope): void {
+    pushChildren($transport: sample, $item: sample, $dragScope:DragScopeTypedef): void {
         $dragScope.$collection.splice($dragScope.$index, 1);
         if (!$item.children) {
             $item.children = new Array();
@@ -52,7 +58,7 @@ class ChildrenDropController {
         $item.children.unshift($transport);
     }
 
-    push($transport: sample, $item: Array<sample>, $dragScope): void {
+    push($transport: sample, $item: Array<sample>, $dragScope:DragScopeTypedef): void {
         $dragScope.$collection.splice($dragScope.$index, 1);
         $item.unshift($transport);
     };

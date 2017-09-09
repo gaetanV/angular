@@ -7,6 +7,7 @@ gulp.task('ts', function () {
     return gulp.src([
         'app/service/rest.module.ts',
         'app/factory/factory.module.ts', 
+        'angular/**/*.ts',
         'app/**/*.ts'
     ])
            .pipe(ts({
@@ -27,8 +28,6 @@ gulp.task('directive', function () {
        .pipe(gulp.dest('app/'));
 });
 
-
-
 gulp.task('css', function () {
     return gulp.src(['directive/**/*.css'])
        .pipe(concat('directive.css'))
@@ -37,5 +36,6 @@ gulp.task('css', function () {
 
 gulp.task('watch', ['ts','directive','css'], function () {
     gulp.watch('app/**/*.ts', ['ts']);
+    gulp.watch('angular/**/*.ts', ['ts']);
     gulp.watch('directive/*.js', ['directive']);
 });

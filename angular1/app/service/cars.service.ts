@@ -8,7 +8,7 @@ class CarsService {
     constructor() {}
 
     getCars(): Promise<Array<car>> {
-        return new Promise(function (resolve, reject) {
+        return new Promise(function (resolve:(cars: Array<car>) => void ) {
             resolve([
                 {mark: 'Volvo', id: 1},
                 {mark: 'Saab', id: 2},

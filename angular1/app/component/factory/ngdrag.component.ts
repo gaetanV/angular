@@ -1,5 +1,5 @@
 @Component({
-    module:'component-factory',
+    module: 'component-factory',
     selector: 'ng-out-drag',
     template: `
         <div class="controller"  >
@@ -16,10 +16,10 @@
             </ul>
          </div>
     `,
-    provider:['$scope', 'ItemFactory']
+    provider: ['$scope', 'ItemFactory']
 })
 @Component({
-    module:'component-factory',
+    module: 'component-factory',
     selector: 'ng-drag',
     template: `        
         <section>
@@ -53,7 +53,7 @@
         </section>
          
     `,
-    provider:['$scope', 'ItemFactory']
+    provider: ['$scope', 'ItemFactory']
 })
 class NgDragController {
 
@@ -61,7 +61,7 @@ class NgDragController {
     pItem2: Array<itemClass>;
 
     constructor(
-        $scope,
+        $scope: angularScopeTypedef,
         ItemFactory: ItemFactory
     ) {
         this.pItem1 = [new ItemFactory.cap(), new ItemFactory.shirt(), new ItemFactory.shirt()];

@@ -1,5 +1,19 @@
+interface QuickEditControllerScopeTypedef extends angularScopeTypedef {
+    clone: (tscope: tscopeTypedef) => void;
+    pItem1: Array<itemClass>;
+    quickModel: string;
+
+
+}
+interface tscopeTypedef extends angularListTypedef {
+    item: itemClass,
+    form: itemClass,
+    editItem: {$valid: boolean},
+    submit: () => void;
+
+}
 @Component({
-    module:'component-factory',
+    module: 'component-factory',
     selector: 'quickedit',
     template: `
        <section>
@@ -29,15 +43,15 @@
            </div>
        </section>
     `,
-    provider:['$scope', 'ItemFactory']
+    provider: ['$scope', 'ItemFactory']
 })
 class QuickEditController {
     constructor(
-        $scope,
+        $scope: QuickEditControllerScopeTypedef,
         ItemFactory: ItemFactory
     ) {
-        
-        $scope.clone = function (tscope) {
+
+        $scope.clone = function (tscope: tscopeTypedef): void {
             tscope.form = angular.copy(tscope.item);
             tscope.submit = function (): void {
                 if (tscope.editItem.$valid === true) {

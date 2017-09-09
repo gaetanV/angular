@@ -1,14 +1,18 @@
+interface ChildrenOptionControllerScopeTypedef extends angularScopeTypedef {
+    sample: Array<sample>;
+}
+
 class ChildrenOptionController {
 
     result: Array<string> = ["2", "1"];
     result2: Array<string> = [];
 
     constructor(
-        $scope,
+        $scope: ChildrenOptionControllerScopeTypedef,
         ChildrenService: ChildrenService,
     ) {
 
-        ChildrenService.getSample().then((sample:Array<sample>) => {
+        ChildrenService.getSample().then((sample: Array<sample>) => {
             $scope.sample = sample;
             $scope.$digest();
         });
