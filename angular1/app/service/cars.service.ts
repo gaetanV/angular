@@ -1,8 +1,3 @@
-interface car {
-    mark: String;
-    id: number;
-}
-
 @Service({
    module: 'service-rest',
    provider: [],

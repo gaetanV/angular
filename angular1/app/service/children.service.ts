@@ -1,9 +1,3 @@
-interface sample {
-    title: String;
-    children: Array<sample>;
-    id: number;
-}
-
 @Service({
    module: 'service-rest',
    provider: [],
