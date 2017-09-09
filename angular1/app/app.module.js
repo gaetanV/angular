@@ -8,10 +8,16 @@
         'gaetan',
         'component-rest',
         'component',
-        'component-factory'
+        'component-factory',
     ]);
-    angular.module('component-rest', ['app.rest']);
+    
+
+
+    angular.module('component-rest', ['service-rest']);
     angular.module('component', []);
     angular.module('component-factory', ['app.factory'])
 
 })();
+
+
+

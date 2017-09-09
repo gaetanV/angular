@@ -3,6 +3,10 @@ interface car {
     id: number;
 }
 
+@Service({
+   module: 'service-rest',
+   provider: [],
+})
 class CarsService {
 
     constructor() {}
@@ -23,5 +27,3 @@ class CarsService {
     }
 
 };
-
-angular.module('app.rest').service('CarsService', CarsService);

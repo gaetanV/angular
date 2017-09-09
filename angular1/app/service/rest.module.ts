@@ -1,1 +1,1 @@
-angular.module('app.rest', []);
+angular.module('service-rest', []);

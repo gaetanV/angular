@@ -4,6 +4,10 @@ interface sample {
     id: number;
 }
 
+@Service({
+   module: 'service-rest',
+   provider: [],
+})
 class ChildrenService {
 
     constructor() {}
@@ -64,5 +68,3 @@ class ChildrenService {
     }
 
 };
-
-angular.module('app.rest').service('ChildrenService', ChildrenService);

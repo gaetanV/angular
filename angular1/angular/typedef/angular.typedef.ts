@@ -12,6 +12,7 @@ interface angularModuleTypedef {
     component: (Name: string, ParamFunc?: any) => void;
     factory: (Name: string, ParamFunc?: any) => void;
     service: (Name: string, ParamFunc?: any) => void;
+    requires: Array<string>;
 }
 
 interface angularTypedef {
