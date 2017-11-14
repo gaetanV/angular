@@ -1,5 +1,5 @@
-angular.module('component').component('pageDatepicker',{
-    template:`
+angular.module('component').component('pageDatepicker', {
+    template: `
         <section>
             <h1>Date Picker</h1>
             <div class="controller">
@@ -9,5 +9,5 @@ angular.module('component').component('pageDatepicker',{
                 </form>
             </div>
         </section>
-    `
+    `,
 });

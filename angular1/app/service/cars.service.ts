@@ -6,8 +6,8 @@ class CarsService {
 
     constructor() {}
 
-    getCars(): Promise<Array<car>> {
-        return new Promise(function (resolve:(cars: Array<car>) => void ) {
+    getCars(): Promise<Array<Car>> {
+        return new Promise(function (resolve: (Cars: Array<Car>) => void ) {
             resolve([
                 {mark: 'Volvo', id: 1},
                 {mark: 'Saab', id: 2},
@@ -18,7 +18,7 @@ class CarsService {
                 {mark: 'Ford', id: 7},
                 {mark: 'Peugeot', id: 8},
             ]);
-        })
+        });
     }
 
-};
+}

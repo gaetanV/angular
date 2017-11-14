@@ -1,5 +1,5 @@
-interface sample {
+interface Sample {
     title: String;
-    children: Array<sample>;
+    children: Array<Sample>;
     id: number;
 }

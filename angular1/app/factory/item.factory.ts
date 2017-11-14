@@ -1,34 +1,34 @@
 class ItemFactory {
 
-    shoe = class extends itemClass {
+    shoe = class extends ItemClass {
         constructor() {
             super();
-            this.name = "shoe";
+            this.name = 'shoe';
             this.price = 105;
 
         }
-    }
+    };
 
-    cap = class extends itemClass {
+    cap = class extends ItemClass {
         constructor() {
             super();
-            this.name = "cap";
+            this.name = 'cap';
             this.price = 25;
 
         }
-    }
+    };
 
-    shirt = class extends itemClass {
+    shirt = class extends ItemClass {
         constructor() {
             super();
-            this.name = "shirt";
+            this.name = 'shirt';
             this.price = 50;
 
         }
-    }
+    };
 
     constructor() {}
 
-};
+}
 
 angular.module('app.factory').service('ItemFactory', ItemFactory);

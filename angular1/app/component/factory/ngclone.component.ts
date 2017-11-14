@@ -8,7 +8,7 @@
                 First Item Name :
                 <br/>
                 <input ng-model="$ctrl.pItem1[0].name" />
-                <article  ng-drag >{{$ctrl.pItem1[0].name}} </article>      
+                <article  ng-drag >{{$ctrl.pItem1[0].name}} </article>
                 <div  class="reception"  ng-drop >Clone in controller</div>
             </div>
             <div class="reception"  ng-drop  > Clone Out of controller</div>
@@ -17,8 +17,8 @@
 })
 class NgCloneController {
 
-    pItem1: Array<itemClass>;
-    pItem2: Array<itemClass>;
+    pItem1: Array<ItemClass>;
+    pItem2: Array<ItemClass>;
 
     constructor(
         ItemFactory: ItemFactory
@@ -27,4 +27,4 @@ class NgCloneController {
         this.pItem2 = [new ItemFactory.cap(), new ItemFactory.cap(), new ItemFactory.shoe()];
     }
 
-};
+}

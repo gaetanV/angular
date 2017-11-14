@@ -6,7 +6,6 @@ angular.module('component').component('matchfield', {
                 <form name="formMatch"  class="css-form" >
                     <label> Input  1</label>
                     <input type="password" ng-model="user.pass"  name="uPass" required="" />
-
                     <div ng-show="formMatch.$submitted || formMatch.uPassCtr.$touched">
                         <span ng-show="formMatch.uPass.$error.required">Tell us your password.</span>
                     </div>
@@ -20,5 +19,5 @@ angular.module('component').component('matchfield', {
                 </form>
             </div>
         </section>
-    `
+    `,
 });

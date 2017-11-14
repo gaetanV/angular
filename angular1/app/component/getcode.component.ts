@@ -6,5 +6,5 @@ angular.module('component').component('getCode', {
                 <div code="directive/code.directive.js" > </div>
             </div>
         </section>
-    `
+    `,
 });

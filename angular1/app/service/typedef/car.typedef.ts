@@ -1,4 +1,4 @@
-interface car {
+interface Car {
     mark: String;
     id: number;
 }

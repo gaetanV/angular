@@ -1,23 +1,23 @@
-interface angularScopeTypedef {
+interface AngularScopeTypedef {
     $digest: () => void;
 }
 
-interface angularListTypedef {
+interface AngularListTypedef {
     $index: number;
     $depth: number;
     $parent: any;
 }
 
-interface angularModuleTypedef {
+interface AngularModuleTypedef {
     component: (Name: string, ParamFunc?: any) => void;
     factory: (Name: string, ParamFunc?: any) => void;
     service: (Name: string, ParamFunc?: any) => void;
     requires: Array<string>;
 }
 
-interface angularTypedef {
+interface AngularTypedef {
     copy: (Object: any) => any;
-    module: (Name: string, Param?: Array<string>) => angularModuleTypedef;
+    module: (Name: string, Param?: Array<string>) => AngularModuleTypedef;
 }
 
-declare var angular: angularTypedef;
+declare var angular: AngularTypedef;
