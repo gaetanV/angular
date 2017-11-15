@@ -2,15 +2,13 @@
 /**/node_modules/*
 /**/package-lock.json
 
-/angular1/directive/v
-/angular1/content/directive.css
-/angular1/app/boot.js
-/angular1/app/directive.js
+/angularJs/directive/v
+/angularJs/content/directive.css
+/angularJs/app/boot.js
+/angularJs/app/directive.js
 
-/angular4/test/
-/angular4/module/**/*.js
-/angular4/directive/**/*.js
-/angular4/pipe/**/*.js
-/angular4/service/**/*.js
-/angular4/src/**/*.js
-/angular4/dist/
+/angular/src/**/*.js
+
+/angular4/
+
+
