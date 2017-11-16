@@ -1,7 +1,7 @@
-import {Directive, ElementRef, Inject, Input, Output, EventEmitter, ViewContainerRef} from '@angular/core';
+import {Directive, ElementRef, Inject, Input, ViewContainerRef, OnInit} from '@angular/core';
 @Directive({selector: '[observe]'})
 
-export class DirectiveStreamDirective {
+export class StreamDirective implements OnInit {
     @Input() observe: string;
     @Input() model: string;
 

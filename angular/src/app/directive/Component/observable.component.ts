@@ -1,8 +1,9 @@
 import {Component, ViewChild, ViewContainerRef} from '@angular/core';
-import {Stream, Observe} from '@directive/DirectiveStream';
+import {Stream, Observe} from '@directive/stream.directive';
+
 
 @Component({
-    selector: 'directive-observable-test',
+    selector: 'observable-test',
     template: `
        <section>
          <div *ngFor="let bloc of message  ">
@@ -16,9 +17,11 @@ import {Stream, Observe} from '@directive/DirectiveStream';
     cible: ['message'],
     history: 4,
 })
-export class DirectiveObservableComponentTest {}
+export class ObservableComponentTestComponent {}
+
+
 @Component({
-    selector: 'directive-observable-test2',
+    selector: 'observable-test2',
     template: `
        <p> >>>> {{message}}  <<<<<<p>
     `
@@ -27,7 +30,7 @@ export class DirectiveObservableComponentTest {}
     stream: 'observable-event',
     cible: ['message'],
 })
-export class DirectiveObservableComponentTest2 {}
+export class ObservableComponentTest2Component {}
 
 
 @Component({
@@ -38,15 +41,15 @@ export class DirectiveObservableComponentTest2 {}
         <input #input  [(ngModel)]="name" >
         <div (click)="upstep()">Chat</div>
         <<<< {{test}} >>>>>
-        <directive-observable-test2></directive-observable-test2>
-        <directive-observable-test></directive-observable-test>
+        <observable-test2></observable-test2>
+        <observable-test></observable-test>
     `
 })
 @Stream({
     stream: 'observable-event',
     cible: 'ngStream',
 })
-export class DirectiveObservableComponent {
+export class ObservableComponent {
     @ViewChild('input', { read: ViewContainerRef }) public input: ViewContainerRef;
 
     ngStream: (string) => void;

@@ -1,13 +1,13 @@
-import {Component, Input, Inject } from '@angular/core';
-import {ServiceGit} from '@service/ServiceGit';
+import {Component, Input, Inject, OnInit, OnChanges} from '@angular/core';
+import {ServiceGit} from '@service/service-git.service';
 
 @Component({
-    selector: 'git',
+    selector: 'directive-git',
     template: `<pre>{{code}}</pre>`,
     providers: [ServiceGit]
 })
 
-export class DirectiveGit {
+export class DirectiveGitComponent implements OnInit, OnChanges {
 
     @Input() user: string;
     @Input() repositories: string;
@@ -18,7 +18,6 @@ export class DirectiveGit {
     constructor(
         @Inject(ServiceGit) private git: ServiceGit
     ) {}
-
 
     ngOnInit() {
         if (!this.user) { throw new Error('user is required'); }

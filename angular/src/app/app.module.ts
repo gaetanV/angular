@@ -1,24 +1,30 @@
 import {NgModule} from '@angular/core';
-import {Routes, RouterModule} from '@angular/router';
-import {BootComponent} from './boot.component';
-import {DirectiveCodeComponent} from './directive/Component/DirectiveCodeComponent';
-import {DirectiveGitComponent} from './directive/Component/DirectiveGitComponent';
-import {DirectiveObservableComponent, DirectiveObservableComponentTest, DirectiveObservableComponentTest2}
-from './directive/Component/DirectiveObservableComponent';
-import {PipeSplitComponent} from './pipe/Component/PipeSplitComponent';
 import {APP_BASE_HREF} from '@angular/common';
 import {BrowserModule} from '@angular/platform-browser';
+import {Routes, RouterModule} from '@angular/router';
 import {HttpModule} from '@angular/http';
-import {DirectiveStreamDirective} from '@directive/DirectiveStream';
-import {DirectiveGit} from '@directive/DirectiveGit';
-import {DirectiveCode} from '@directive/DirectiveCode';
-import {PipeSplit} from '@pipe/PipeSplit';
 import {FormsModule} from '@angular/forms';
 
+import {BootComponent} from './boot.component';
+
+import {CodeComponent} from './directive/Component/code.component';
+import {ObservableComponent,
+        ObservableComponentTestComponent,
+        ObservableComponentTest2Component
+} from './directive/Component/observable.component';
+import {GitComponent} from './directive/Component/git.component';
+
+import {PipeSplitComponent} from './pipe/Component/pipe-split.component';
+
+import {DirectiveCodeComponent} from '@directive/directive-code.component';
+import {StreamDirective} from '@directive/stream.directive';
+import {DirectiveGitComponent} from '@directive/directive-git.component';
+import {SplitPipe} from '@pipe/split.pipe';
+
 const appRoutes: Routes = [
-    {path: 'DirectiveCode', component: DirectiveCodeComponent},
-    {path: 'DirectiveGit', component: DirectiveGitComponent},
-    {path: 'DirectiveObservable', component: DirectiveObservableComponent},
+    {path: 'DirectiveCode', component: CodeComponent},
+    {path: 'DirectiveGit', component: GitComponent},
+    {path: 'DirectiveObservable', component: ObservableComponent},
     {path: 'PipeSplitComponent', component: PipeSplitComponent},
 ];
 
@@ -37,14 +43,16 @@ const appRoutes: Routes = [
     ],
     declarations: [
         BootComponent,
-        DirectiveObservableComponent, DirectiveObservableComponentTest, DirectiveObservableComponentTest2,
-        PipeSplit,
+        ObservableComponent,
+        ObservableComponentTestComponent,
+        ObservableComponentTest2Component,
         PipeSplitComponent,
-        DirectiveCodeComponent,
+        CodeComponent,
+        GitComponent,
+        StreamDirective,
+        SplitPipe,
         DirectiveGitComponent,
-        DirectiveStreamDirective,
-        DirectiveGit,
-        DirectiveCode
+        DirectiveCodeComponent
     ],
     bootstrap: [BootComponent]
 })

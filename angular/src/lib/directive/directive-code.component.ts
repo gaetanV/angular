@@ -2,11 +2,11 @@ import {Component, Input, Inject} from '@angular/core';
 import {Http} from '@angular/http';
 
 @Component({
-    selector: 'code',
+    selector: 'directive-code',
     template: `<pre>{{code}}</pre>`,
 })
 
-export class DirectiveCode {
+export class DirectiveCodeComponent {
     code: String = 'Set your src';
 
     constructor(

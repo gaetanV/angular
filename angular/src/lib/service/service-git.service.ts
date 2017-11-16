@@ -1,26 +1,26 @@
 import {Injectable , Inject} from '@angular/core';
 import {Http} from '@angular/http';
 
-interface gitMap {
-    tree: Array<gitMapItem>;
+interface GitMap {
+    tree: Array<GitMapItem>;
 }
 
-interface gitMapItem {
+interface GitMapItem {
     url: string;
     path: string;
 }
 
-interface gitPath {
+interface GitPath {
     content: string;
 }
 
-interface cache {
-    data: Array<gitMapItem>;
+interface Cache {
+    data: Array<GitMapItem>;
     time: number;
     refresh: number;
 }
 
-const cMap: Array<cache> = [];
+const cMap: Array<Cache> = [];
 
 @Injectable()
 export class ServiceGit {
@@ -42,13 +42,13 @@ export class ServiceGit {
             this.http.get(`https://api.github.com/repos/${user}/${repositories}/git/trees/${branch}?recursive=1`)
                 .subscribe(
                 (data) => {
-                    const data_js: gitMap = data.json();
+                    const data_js: GitMap = data.json();
                     if (!data_js.tree) {
                         reject('Error in Ressource map data : missing tree index');
                     }
-                    const response: Array<gitMapItem> = [];
+                    const response: Array<GitMapItem> = [];
 
-                    data_js.tree.forEach((a: gitMapItem) => {
+                    data_js.tree.forEach((a: GitMapItem) => {
                         response[a.path] = a;
                     });
                     cMap[index] = {
@@ -66,14 +66,14 @@ export class ServiceGit {
     getPath(user: string, repositories: string, branch: string, path: string) {
         return new Promise((resolve, reject) => {
             this.getMap(user, repositories, branch).then(
-                (data_js: Array<gitMapItem>) => {
+                (data_js: Array<GitMapItem>) => {
                     if (!data_js[path]) {
                         reject('Error final ressources not found in map');
                     } else {
                         this.http.get(data_js[path].url)
                         .subscribe(
                             (data) => {
-                                const tmp: gitPath = data.json();
+                                const tmp: GitPath = data.json();
                                 if (!tmp.content) {
                                     reject('Error in final ressources : missing content index');
                                 } else {
@@ -88,10 +88,6 @@ export class ServiceGit {
                 },
                 (error) => reject(error)
             );
-
-
         });
     }
-
-
 }

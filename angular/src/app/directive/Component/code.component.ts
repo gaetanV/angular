@@ -5,10 +5,11 @@ import {Component} from '@angular/core';
         <h1>Directive Code</h1>
         <div (click)="setPattern('./index.html')">Code1</div>
         <div (click)="setPattern('./test.ts')">Code2</div>
-        <code src="{{pattern}}" ></code>`
+        <directive-code src="{{pattern}}" ></directive-code>
+    `
 })
-export class DirectiveCodeComponent {
-    pattern: String = './index.html';
+export class CodeComponent {
+    pattern: string = './index.html';
 
     setPattern(pattern: string) {
         this.pattern = pattern;

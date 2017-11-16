@@ -1,8 +1,7 @@
 import {Component} from '@angular/core';
 
-
 @Component({
-    selector: 'pipe-split',
+    selector: 'app-pipe-split',
     template: `
        <section>
          <div *ngFor="let bloc of message|split:'|||' ">
@@ -13,7 +12,6 @@ import {Component} from '@angular/core';
 })
 
 export class PipeSplitComponent {
-
      message = '1|||2|||3';
 }
 
