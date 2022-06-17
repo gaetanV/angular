@@ -1,10 +1,10 @@
-.ng-drop{
-    border:#000 dashed 2px;
+.ng-drop {
+  border: #000 dashed 2px;
 }
-.ng-drop-active{
-    background:#ddd;
+.ng-drop-active {
+  background: #ddd;
 }
 
-.ng-drop-error{
-    background:#B94A48;
+.ng-drop-error {
+  background: #b94a48;
 }

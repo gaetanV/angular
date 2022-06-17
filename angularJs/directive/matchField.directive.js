@@ -1,49 +1,45 @@
 /*
  * directive/matchField.directive.js
  *
- * (c) Gaetan Vigneron 
+ * (c) Gaetan Vigneron
  *  11/05/2015
  */
 
-angular.module('gaetan').directive('matchField', [function () {
-        
+angular.module('gaetan').directive('matchField', [
+  function () {
     return {
-        restrict: 'A',
-        require: 'ngModel',
-        link: link
+      restrict: 'A',
+      require: 'ngModel',
+      link: link,
     };
 
     //////////
 
     function link($scope, $element, $attrs, $controller) {
+      var field = $attrs.matchField;
+      var match;
 
-        var field = $attrs.matchField;
-        var match;
-        
-        $scope.$watch(field,onModelChange);
-        
-        /**
-         * @Error requiere ng-model
-         */
-        if (!$controller)
-            return;
+      $scope.$watch(field, onModelChange);
 
-        /**
-         * @Injection match validation
-         */
-        $controller.$validators.match = function (modelValue) {
-            return modelValue === match || false;
-        };
+      /**
+       * @Error requiere ng-model
+       */
+      if (!$controller) return;
 
-        /**
-         * @Observe  ng-model (field) change
-         */
-        function onModelChange(val) {
-              match = val;
-              $controller.$validate();
-        }
+      /**
+       * @Injection match validation
+       */
+      $controller.$validators.match = function (modelValue) {
+        return modelValue === match || false;
+      };
 
-
-
-    }      
-}]);
+      /**
+       * @Observe  ng-model (field) change
+       */
+      function onModelChange(val) {
+        match = val;
+        $controller.$validate();
+      }
+    }
+  },
+]);
